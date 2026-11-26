@@ -111,3 +111,6 @@
 - Harcama: 12 jetonlu balon (150–1200), temalar (Neon Gece 1500, Pastel Gün 2500; yıldızla ücretsiz açılma yolu ve IAP sürüyor). Satın alma iki dokunuşla (yanlışlıkla harcama yok).
 - Günlük görevler: 6 türden 3'ü (bölüm, yıldız, sıkışma, günlük kuyu, 3★, kıl payı); tarih tohumlu → herkese aynı, yeniden başlatmada sabit. Rozet sayacı ana menüde.
 - Denge tahmini: saatte ~10 bölüm × ~15 jeton ≈ 150 + görevler ~250/gün → en pahalı balon (disko) ~3–4 günlük düzenli oyunla. Gerçek veriyle ayarlanacak.
+
+## D26 — x86_64 mimarisi eklendi · 2026-11-26
+- Yapımcı testi PC'deki Android emülatöründe yapacak; emülatörler çoğunlukla x86_64. Tüm preset'lere x86_64 eklendi (ARM'a ek). Play AAB'si cihaza göre böldüğü için telefon indirmelerini büyütmez; Chromebook ve emülatör desteği gelir. Hafif APK 58 → 87 MB.
