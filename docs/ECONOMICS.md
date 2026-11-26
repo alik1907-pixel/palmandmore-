@@ -15,6 +15,16 @@ _2026-11-26. Kaynaklar RESEARCH.md §1, §2 ve §6'da. Rakamlar aralık olarak v
 
 Mediation: AdMob (bidding). Ek ağlar (AppLovin, Unity, Liftoff) AdMob mediation adaptörleriyle sonradan eklenebilir; kod tarafında değişiklik gerekmez, adaptör bağımlılığı `sis_platform_editor.gd` DEPS listesine eklenir. DOĞRULANMADI: adaptör sürüm uyumu.
 
+## 1b. Jeton ekonomisi (oyun içi, D25)
+| Kaynak | Miktar |
+|---|---|
+| Bölüm bitirme | 5 + 5×★ (5–20) |
+| Günlük kuyu (günün ilki) | +50 |
+| Günlük görevler | 3 × 40–120, hepsi +100 |
+| Ödüllü "2× jeton" | bölüm ödülü kadar |
+| **Harcama** | 12 balon 150–1200 · Neon Gece 1500 · Pastel Gün 2500 |
+"2× jeton" yeni bir ödüllü reklam yeri: bölüm sonunda, isteğe bağlı. Oturum başına izleme oranı yumuşak lansmanda ölçülecek (ARPDAU'nun ana kaldıracı).
+
 ## 2. 12 aylık LTV senaryoları (yükleme başına)
 Yöntem: D1, D7 ve D30'dan parçalı güç yasası tutma eğrisi uydurulur, 365 gün toplanır, ARPDAU aralığıyla çarpılır.
 ARPDAU varsayımları: Tier-1 için 0,08–0,20 $, gelişen pazarlar için 0,015–0,04 $. Kaynak: hibrit-gündelik için 0,15–0,50 $ bildiriliyor, sadece reklamla ~0,03 $. Yeni bir oyun için temkinli alındı.

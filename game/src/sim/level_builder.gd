@@ -18,21 +18,84 @@ const FUNNEL_SAFE := 130.0      # unspiked rim beside the gap
 const DEFAULT_WIND := 260.0
 const THROAT_COLLAR := 40.0     # unspiked mouth of a spiked throat
 
-static func load_level(n: int) -> Dictionary:
-	var path := "res://data/levels/%02d.json" % n
-	var f := FileAccess.open(path, FileAccess.READ)
-	if f == null:
+const BANK_PATH := "res://data/levels/bank.json"
+static var _file_count := -1
+static var _bank: Array = []
+static var _bank_loaded := false
+
+## Levels 1..N come from data/levels/NN.json (hand-made + selected). After them the
+## endless campaign continues with the pre-validated bank (data/levels/bank.json);
+## once the bank is used up it repeats mirrored (left↔right), which is still solvable
+## because the physics is symmetric.
+static func spec_for(n: int) -> Dictionary:
+	if n < 1:
 		return {}
-	var spec: Dictionary = JSON.parse_string(f.get_as_text())
+	if n <= _files():
+		var f := FileAccess.open("res://data/levels/%02d.json" % n, FileAccess.READ)
+		if f == null:
+			return {}
+		return JSON.parse_string(f.get_as_text())
+	var bank := _bank_levels()
+	if bank.is_empty():
+		return {}
+	var b := n - _files() - 1
+	var i := b % bank.size()
+	var cycle := b / bank.size()
+	if cycle >= 2:
+		return {}
+	var spec: Dictionary = (bank[i] as Dictionary).duplicate(true)
+	return mirror(spec) if cycle == 1 else spec
+
+static func load_level(n: int) -> Dictionary:
+	var spec := spec_for(n)
+	if spec.is_empty():
+		return {}
 	var lvl := build(spec)
 	lvl["number"] = n
+	lvl["par"] = float(spec.get("par", 20.0))
 	return lvl
 
 static func level_count() -> int:
-	var n := 0
-	while FileAccess.file_exists("res://data/levels/%02d.json" % (n + 1)):
-		n += 1
-	return n
+	return _files() + 2 * _bank_levels().size()
+
+static func campaign_file_count() -> int:
+	return _files()
+
+static func _files() -> int:
+	if _file_count < 0:
+		_file_count = 0
+		while FileAccess.file_exists("res://data/levels/%02d.json" % (_file_count + 1)):
+			_file_count += 1
+	return _file_count
+
+static func _bank_levels() -> Array:
+	if not _bank_loaded:
+		_bank_loaded = true
+		if FileAccess.file_exists(BANK_PATH):
+			var d = JSON.parse_string(FileAccess.get_file_as_string(BANK_PATH))
+			if d is Array:
+				_bank = d
+	return _bank
+
+## Left↔right mirror of a spec (x → 720 − x, winds and side strips flipped).
+static func mirror(spec: Dictionary) -> Dictionary:
+	var out := spec.duplicate(true)
+	var w := SIDE_L + SIDE_R
+	out["start_x"] = w - float(spec.get("start_x", 360.0))
+	for row in out.rows:
+		match String(row.type):
+			"gate":
+				row.x = w - float(row.x)
+			"wind":
+				row.dir = -float(row.dir)
+			"bar":
+				var x0 := float(row.x0)
+				row.x0 = w - float(row.x1)
+				row.x1 = w - x0
+			"strip":
+				row.side = "R" if String(row.side) == "L" else "L"
+	out["mirrored"] = true
+	return out
 
 static func build(spec: Dictionary) -> Dictionary:
 	var walls: Array = []

@@ -122,10 +122,19 @@ func _on_button(id: String) -> void:
 				main.open_home()
 		"patch":
 			Platform.show_rewarded("patch")
+		"double":
+			Platform.show_rewarded("double")
 		"share":
 			Platform.share(_share_text())
 
 func _on_rewarded(placement: String, ok: bool) -> void:
+	if placement == "double":
+		if ok and sim.state == "won" and not bool(result.get("doubled", true)):
+			result.doubled = true
+			Profile.add_coins(int(result.get("coins", 0)), "double_ad")
+			flash = 0.5
+			sfx.play("win", 1.3)
+		return
 	if placement != "patch" or not ok or sim.state != "popped" or snapshots.is_empty():
 		return
 	var idx := maxi(snapshots.size() - CONTINUE_REWIND, 0)
@@ -237,11 +246,15 @@ func _handle_events(evs: Array) -> void:
 			"squeeze":
 				sfx.play("squeeze")
 				squeezed_once = true
+				if bot == null:
+					Profile.mission_add("squeeze")
 				_vibrate(20, 0.5)
 				_burst(e.at, 8, st.c.finish, 220.0, 3.5)
 			"near_miss":
 				slowmo = 24
 				sfx.play("whoosh")
+				if bot == null:
+					Profile.mission_add("near_miss")
 			"won":
 				sfx.play("win")
 				_vibrate(40, 0.6)
@@ -256,8 +269,15 @@ func _on_won() -> void:
 	var stars := _stars_for(sec)
 	result = {"sec": sec, "stars": stars}
 	if bot != null:
+		result.coins = Profile.level_coins(stars)     # display only (videos); nothing saved
+		result.doubled = false
 		return
+	var coins := Profile.level_coins(stars)
+	Profile.mission_add("stars", stars)
+	if stars == 3:
+		Profile.mission_add("three_star")
 	if mode == "level":
+		Profile.mission_add("levels")
 		var r := Profile.record_level(level_num, stars, sec if not continued else 9999.0)
 		result.merge(r)
 		if level_num == 6 and stars == 3 and not Profile.data.get("review_asked", false):
@@ -265,8 +285,14 @@ func _on_won() -> void:
 			Profile.save()
 			Platform.request_review()
 	else:
+		Profile.mission_add("daily")
 		var r2 := Profile.record_daily(sec)
 		result.merge(r2)
+		if bool(r2.get("first_today", false)):
+			coins += Profile.COINS_DAILY_FIRST
+	result.coins = coins
+	result.doubled = false
+	Profile.add_coins(coins, "level" if mode == "level" else "daily")
 	Analytics.log_event("level_complete", {"mode": mode, "level": level_num, "attempt": attempt, "sec": snappedf(sec, 0.1),
 		"stars": stars, "continued": continued})
 
@@ -510,11 +536,17 @@ func _draw_end_panel() -> void:
 			UI.star(self, Vector2(W * 0.5 + (i - 1) * 90, r.position.y + 90 - (14 if i == 1 else 0)), 38.0, i < stars)
 		UI.text_center(self, "%.1f s" % float(result.get("sec", 0.0)), Vector2(W * 0.5, r.position.y + 200), 54, ink)
 		if mode == "daily":
-			UI.icon(self, "flame", Vector2(W * 0.5 - 40, r.position.y + 250), 22.0, Color.WHITE)
-			UI.text_left(self, str(Profile.streak_alive()), Vector2(W * 0.5 - 10, r.position.y + 265), 36, ink)
+			UI.icon(self, "flame", Vector2(W * 0.5 + 150, r.position.y + 178), 20.0, Color.WHITE)
+			UI.text_left(self, str(Profile.streak_alive()), Vector2(W * 0.5 + 176, r.position.y + 192), 32, ink)
 		var unl: Array = result.get("unlocks", [])
 		if not unl.is_empty():
-			UI.text_center(self, I18n.t("new_unlock"), Vector2(W * 0.5, r.position.y + 300), 30, st.c.finish)
+			UI.text_center(self, I18n.t("new_unlock"), Vector2(W * 0.5, r.position.y + 236), 26, st.c.finish)
+		if result.has("coins"):
+			var got := int(result.get("coins", 0)) * (2 if bool(result.get("doubled", false)) else 1)
+			UI.icon(self, "coin", Vector2(W * 0.5 - 70, r.position.y + 282), 20.0, Color.WHITE)
+			UI.text_left(self, "+%d" % got, Vector2(W * 0.5 - 40, r.position.y + 296), 36, ink)
+			if bot == null and not bool(result.get("doubled", true)) and Platform.rewarded_available():
+				_btn("double", Rect2(W * 0.5 + 50, r.position.y + 254, 190, 64), I18n.t("double_reward"), true)
 		_btn("home", Rect2(r.position.x + 30, r.end.y - 130, 140, 100), "", false, "home")
 		_btn("share", Rect2(r.position.x + 190, r.end.y - 130, 140, 100), "", false, "share")
 		_btn("next", Rect2(r.position.x + 350, r.end.y - 130, r.size.x - 380, 100), "", true, "next")

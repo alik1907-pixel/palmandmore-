@@ -17,6 +17,9 @@ var toast := ""
 var toast_t := 0.0
 var grid_page := -1
 const PAGE_SIZE := 15
+const SKINS_PER_PAGE := 10
+var skins_page := 0
+var pending_buy := ""        # first tap selects a shop item, second tap confirms
 const SET_STEP := 92.0      # settings rows (up to 9 rows must fit the panel)
 const SET_H := 76.0
 
@@ -84,7 +87,19 @@ func _on_button(id: String) -> void:
 		var s := id.substr(5)
 		if Profile.data.owned_skins.has(s):
 			Profile.set_skin(s)
+			pending_buy = ""
 			Analytics.log_event("skin_equip", {"skin": s})
+		elif Skins.unlock_rule(s).has("coins"):
+			if pending_buy != "skin:" + s:
+				pending_buy = "skin:" + s
+			elif Profile.buy_skin(s):
+				pending_buy = ""
+				sfx.play("win", 1.2)
+				_toast(I18n.t("new_unlock"))
+				Analytics.log_event("shop_buy", {"item": s, "price": int(Skins.unlock_rule(s).coins)})
+			else:
+				pending_buy = ""
+				_toast(I18n.t("not_enough"))
 		elif Skins.unlock_rule(s).has("ad"):
 			Platform.show_rewarded("skin:" + s)
 		elif Skins.unlock_rule(s).has("iap"):
@@ -103,14 +118,42 @@ func _on_button(id: String) -> void:
 		if Profile.data.owned_styles.has(st):
 			Profile.set_style(st)
 			main.apply_style()
+			pending_buy = ""
 			Analytics.log_event("theme_equip", {"theme": st})
+		elif ArtStyle.coin_price(st) > 0:
+			if pending_buy != "style:" + st:
+				pending_buy = "style:" + st
+			elif Profile.buy_style(st):
+				pending_buy = ""
+				main.apply_style()
+				sfx.play("win", 1.2)
+				Analytics.log_event("shop_buy", {"item": st, "price": ArtStyle.coin_price(st)})
+			else:
+				pending_buy = ""
+				_toast(I18n.t("not_enough"))
+		return
+	if id.begins_with("claim:"):
+		var got := Profile.claim_mission(int(id.substr(6)))
+		if got > 0:
+			sfx.play("win", 1.1)
+			_toast("+%d" % got)
+			Analytics.log_event("mission_claim", {"reward": got})
 		return
 	match id:
 		"play": main.open_level(clampi(int(Profile.data.unlocked), 1, LevelBuilder.level_count()))
 		"daily":
 			if Daily.pool_size() > 0:
 				main.open_daily()
-		"skins", "themes", "settings": open_panel = id
+		"skins", "themes", "settings", "missions":
+			open_panel = id
+			pending_buy = ""
+		"claim_bonus":
+			var b := Profile.claim_bonus()
+			if b > 0:
+				sfx.play("win", 1.0)
+				_toast("+%d" % b)
+		"skins_prev": skins_page -= 1
+		"skins_next": skins_page += 1
 		"page_prev": grid_page -= 1
 		"page_next": grid_page += 1
 		"close": open_panel = ""
@@ -156,7 +199,9 @@ func _draw() -> void:
 	var ink: Color = st.c.ui
 	# top bar
 	UI.star(self, Vector2(56, 70), 24.0, true)
-	UI.text_left(self, str(Profile.total_stars()), Vector2(90, 84), 40, ink)
+	UI.text_left(self, str(Profile.total_stars()), Vector2(90, 84), 40, ink, 120.0)
+	UI.icon(self, "coin", Vector2(232, 70), 22.0, Color.WHITE)
+	UI.text_left(self, str(Profile.coins()), Vector2(262, 84), 40, ink, 140.0)
 	_btn("settings", Rect2(W - 112, 30, 80, 80), "", false)
 	UI.icon(self, "gear", Vector2(W - 72, 70), 26.0, Color.WHITE)
 	# title + mascot
@@ -194,24 +239,34 @@ func _draw() -> void:
 			_arrow("page_prev", Rect2(4, 790, 46, 110), -1.0, ink)
 		if grid_page < pages - 1:
 			_arrow("page_next", Rect2(W - 50, 790, 46, 110), 1.0, ink)
-		for p_i in pages:
-			draw_circle(Vector2(W * 0.5 + (p_i - (pages - 1) * 0.5) * 22.0, 1030), 5.0, Color(ink, 0.85 if p_i == grid_page else 0.25))
+		if pages <= 8:
+			for p_i in pages:
+				draw_circle(Vector2(W * 0.5 + (p_i - (pages - 1) * 0.5) * 22.0, 1030), 5.0, Color(ink, 0.85 if p_i == grid_page else 0.25))
+		else:   # endless campaign: show the level range instead of ~130 dots
+			UI.text_center(self, "%d–%d" % [first + 1, mini(first + PAGE_SIZE, n)], Vector2(W * 0.5, 1040), 22, Color(ink, 0.6), 200.0)
 	# play
 	_btn("play", Rect2(140, 1050, W - 280, 104), I18n.t("play"), true)
-	# bottom row
-	var bx := [130.0, 360.0, 590.0]
-	_btn("skins", Rect2(bx[0] - 56, 1172, 112, 84), "", false)
-	UI.icon(self, "balloon", Vector2(bx[0], 1210), 28.0, Color.WHITE)
-	_btn("themes", Rect2(bx[1] - 56, 1172, 112, 84), "", false)
-	UI.icon(self, "palette", Vector2(bx[1], 1214), 26.0, Color.WHITE)
+	# bottom row: balloons, themes, missions (+badge), remove ads
+	var ids := ["skins", "themes", "missions"]
 	if not Profile.data.ads_removed:
-		_btn("remove_ads", Rect2(bx[2] - 56, 1172, 112, 84), "", false)
-		UI.icon(self, "noads", Vector2(bx[2], 1214), 26.0, Color.WHITE)
+		ids.append("remove_ads")
+	var icons := {"skins": "balloon", "themes": "palette", "missions": "list", "remove_ads": "noads"}
+	var span := 600.0 / ids.size()
+	for i in ids.size():
+		var cx := 60.0 + span * (i + 0.5)
+		_btn(ids[i], Rect2(cx - 56, 1172, 112, 84), "", false)
+		UI.icon(self, icons[ids[i]], Vector2(cx, 1214 - (4 if ids[i] == "skins" else 0)), 26.0, Color.WHITE)
+		if ids[i] == "missions":
+			var badge := Profile.claimable_count()
+			if badge > 0:
+				draw_circle(Vector2(cx + 44, 1178), 18.0, Color("e8553e"))
+				UI.text_center(self, str(badge), Vector2(cx + 44, 1188), 24, Color.WHITE, 40.0)
 	if open_panel != "":
 		buttons.clear()     # modal: only panel buttons are live
 		draw_rect(Rect2(0, 0, W, H), Color(0, 0, 0, 0.45))
 		match open_panel:
 			"skins": _draw_skins(st)
+			"missions": _draw_missions(st)
 			"themes": _draw_themes(st)
 			"settings": _draw_settings(st)
 			"lang": _draw_languages(st)
@@ -283,9 +338,14 @@ func _panel_frame(st: ArtStyle, title: String) -> Rect2:
 func _draw_skins(st: ArtStyle) -> void:
 	var r := _panel_frame(st, I18n.t("skins"))
 	var ink: Color = st.c.ink if st.id != "gece" else Color.WHITE
-	for i in Skins.ALL.size():
+	var pages := ceili(Skins.ALL.size() / float(SKINS_PER_PAGE))
+	skins_page = clampi(skins_page, 0, pages - 1)
+	UI.icon(self, "coin", Vector2(r.position.x + 50, r.position.y + 62), 18.0, Color.WHITE)
+	UI.text_left(self, str(Profile.coins()), Vector2(r.position.x + 76, r.position.y + 74), 30, ink, 140.0)
+	for i in range(skins_page * SKINS_PER_PAGE, mini((skins_page + 1) * SKINS_PER_PAGE, Skins.ALL.size())):
 		var s: String = Skins.ALL[i]
-		var cell := Rect2(r.position.x + 30 + (i % 2) * 310, r.position.y + 130 + (i / 2) * 166, 290, 150)
+		var k := i - skins_page * SKINS_PER_PAGE
+		var cell := Rect2(r.position.x + 30 + (k % 2) * 310, r.position.y + 120 + (k / 2) * 160, 290, 146)
 		var owned: bool = Profile.data.owned_skins.has(s)
 		var sel: bool = String(Profile.data.skin) == s
 		UI._round_rect(self, cell, 22.0, Color(st.c.finish, 0.35) if sel else Color(0, 0, 0, 0.06))
@@ -302,13 +362,27 @@ func _draw_skins(st: ArtStyle) -> void:
 			label = I18n.t("watch_unlock")
 		elif rule.has("iap"):
 			label = Platform.price_of(rule.iap) if Platform.price_of(rule.iap) != "" else I18n.t("cosmetic_pack")
-		var enabled: bool = owned or rule.has("ad") or rule.has("iap")
+		elif rule.has("coins"):
+			label = (I18n.t("buy_confirm") % rule.coins) if pending_buy == "skin:" + s else str(rule.coins)
+			if pending_buy == "skin:" + s:
+				UI._round_rect(self, cell.grow(-3), 20.0, Color(st.c.finish, 0.25))
+			else:
+				UI.icon(self, "coin", cell.position + Vector2(150, 72), 14.0, Color.WHITE)
+		var enabled: bool = owned or rule.has("ad") or rule.has("iap") or rule.has("coins")
 		if rule.has("ad") and not owned and not Platform.rewarded_available():
 			enabled = false
 		buttons.append({"id": "skin:" + s, "rect": cell, "enabled": enabled})
 		if rule.has("ad") and not owned:
 			UI.icon(self, "film", cell.position + Vector2(158, 46), 16.0, ink)
-		UI.text_wrap(self, label, cell.position + Vector2(136, 82), cell.size.x - 146.0, 20, ink)
+		var lx := 172.0 if (rule.has("coins") and not owned and pending_buy != "skin:" + s) else 136.0
+		UI.text_wrap(self, label, cell.position + Vector2(lx, 82), cell.size.x - lx - 10.0, 20, ink)
+	if pages > 1:
+		if skins_page > 0:
+			_arrow("skins_prev", Rect2(r.position.x + 6, r.end.y - 70, 60, 60), -1.0, ink)
+		if skins_page < pages - 1:
+			_arrow("skins_next", Rect2(r.end.x - 66, r.end.y - 70, 60, 60), 1.0, ink)
+		for p_i in pages:
+			draw_circle(Vector2(W * 0.5 + (p_i - (pages - 1) * 0.5) * 22.0, r.end.y - 40), 5.0, Color(ink, 0.85 if p_i == skins_page else 0.25))
 
 func _draw_themes(st: ArtStyle) -> void:
 	var r := _panel_frame(st, I18n.t("themes"))
@@ -327,8 +401,16 @@ func _draw_themes(st: ArtStyle) -> void:
 		_balloon_preview(cell.position + Vector2(cell.size.x - 110, 95), 50.0, "classic", s)
 		UI.text_left(self, I18n.t("theme_" + id) + ("  ✓" if String(Profile.data.style) == id else ""), cell.position + Vector2(24, 50), 30, s.c.ui)
 		if not owned:
-			UI.text_left(self, I18n.t("locked_stars") % ArtStyle.unlock_stars(id), cell.position + Vector2(24, 190), 22, s.c.ui)
-		buttons.append({"id": "style:" + id, "rect": cell, "enabled": owned})
+			var price := ArtStyle.coin_price(id)
+			var line := I18n.t("locked_stars") % ArtStyle.unlock_stars(id)
+			if price > 0:
+				line += "   ·   " + ((I18n.t("buy_confirm") % price) if pending_buy == "style:" + id else "%d" % price)
+			UI.text_left(self, line, cell.position + Vector2(24, 190), 22, s.c.ui, cell.size.x - 70.0)
+			if price > 0 and pending_buy != "style:" + id:
+				var size := UI.fit(line, UI.scaled(22), cell.size.x - 70.0)
+				var wpx := UI.f().get_string_size(line, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x
+				UI.icon(self, "coin", cell.position + Vector2(24 + wpx + 18, 183), 12.0, Color.WHITE)
+		buttons.append({"id": "style:" + id, "rect": cell, "enabled": owned or ArtStyle.coin_price(id) > 0})
 	if Platform.can_buy("theme_pack") or OS.is_debug_build():
 		var price := Platform.price_of("theme_pack")
 		_btn("theme_pack", Rect2(r.position.x + 60, r.end.y - 140, r.size.x - 120, 96), I18n.t("theme_pack") + ("  " + price if price != "" else ""), true)
@@ -371,3 +453,34 @@ func _draw_languages(st: ArtStyle) -> void:
 		if selected:
 			UI._round_rect(self, cell.grow(-6), 18.0, Color(1, 1, 1, 0.25))
 		UI.text_center(self, label + ("  ✓" if selected else ""), cell.get_center() + Vector2(0, 11), 28, Color.WHITE)
+
+func _draw_missions(st: ArtStyle) -> void:
+	var r := _panel_frame(st, I18n.t("missions"))
+	var ink: Color = st.c.ink if st.id != "gece" else Color.WHITE
+	var list := Profile.missions_today()
+	for i in list.size():
+		var mi: Dictionary = list[i]
+		var row := Rect2(r.position.x + 30, r.position.y + 130 + i * 190, r.size.x - 60, 170)
+		UI._round_rect(self, row, 22.0, Color(0, 0, 0, 0.06))
+		var key := "mission_" + String(mi.type)
+		var text := I18n.t(key) % int(mi.target) if I18n.t(key).contains("%d") else I18n.t(key)
+		UI.text_left(self, text, row.position + Vector2(24, 50), 28, ink, row.size.x - 48.0)
+		var bar := Rect2(row.position + Vector2(24, 76), Vector2(row.size.x - 220, 22))
+		UI._round_rect(self, bar, 11.0, Color(ink, 0.15))
+		var k := clampf(float(mi.progress) / maxf(float(mi.target), 1.0), 0.0, 1.0)
+		if k > 0.0:
+			UI._round_rect(self, Rect2(bar.position, Vector2(maxf(bar.size.x * k, 22.0), bar.size.y)), 11.0, st.c.finish)
+		UI.text_left(self, "%d / %d" % [int(mi.progress), int(mi.target)], row.position + Vector2(24, 140), 24, Color(ink, 0.7))
+		UI.icon(self, "coin", row.position + Vector2(row.size.x - 170, 88), 16.0, Color.WHITE)
+		UI.text_left(self, "+%d" % int(mi.reward), row.position + Vector2(row.size.x - 148, 100), 28, ink, 120.0)
+		if mi.claimed:
+			UI.text_left(self, "✓", row.position + Vector2(row.size.x - 70, 150), 40, st.c.finish)
+		elif Profile.mission_done(mi):
+			_btn("claim:%d" % i, Rect2(row.position + Vector2(row.size.x - 180, 112), Vector2(160, 50)), I18n.t("claim"), true)
+	var by := r.position.y + 130 + 3 * 190 + 10
+	if Profile.bonus_available():
+		_btn("claim_bonus", Rect2(r.position.x + 60, by, r.size.x - 120, 84), I18n.t("all_done_bonus") % Profile.MISSION_BONUS, true)
+	else:
+		UI.text_center(self, I18n.t("all_done_bonus") % Profile.MISSION_BONUS, Vector2(W * 0.5, by + 50), 26, Color(ink, 0.55), r.size.x - 80.0)
+	var secs_left := 86400 - int(fposmod(Time.get_unix_time_from_system() + float(Time.get_time_zone_from_system().bias) * 60.0, 86400.0))
+	UI.text_center(self, I18n.t("new_missions_in") % maxi(1, ceili(secs_left / 3600.0)), Vector2(W * 0.5, r.end.y - 40), 24, Color(ink, 0.6), r.size.x - 80.0)

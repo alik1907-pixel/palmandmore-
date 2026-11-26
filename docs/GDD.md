@@ -85,6 +85,12 @@ Tek tuşla şişip sönen jöle bir balonu dikenli, rüzgârlı, daracık bir ku
 - **Ayarlar:** ses, müzik, titreşim, dil (15 dil: TR, EN, ES, PT, ID, HI, DE, JA, FR, IT, RU, KO, ZH, VI, TH; varsayılan sistem dili, desteklenmiyorsa İngilizce), reklamsız, satın alımları geri yükle, gizlilik seçenekleri (UMP gerekiyorsa), gizlilik politikası.
 - **Android:** geri tuşu (panel kapat → menü → çıkış), arka plana atılınca basılı tutma bırakılır, çoklu parmak desteği.
 
+## 15. Uzun süreli oynanış (D24–D25)
+- **Kampanya:** 50 tasarlanmış/seçilmiş bölüm + ~950 bankadan + ~950 aynalı = ~1950 bölüm. Dünya adları döngüsel ("Rüzgâr Vadisi 2"). Enerji/can yok.
+- **Jeton:** bölüm 5+5×★, günlük ilk +50, görevler, "2× jeton" ödüllü reklamı. Ana menü üstte ★ ve jeton.
+- **Günlük görevler (3/gün):** bölüm geç, yıldız topla, sıkış, günlük kuyu, 3★, kıl payı; "hepsini bitir" bonusu; yenilenme sayacı.
+- **Mağaza:** 22 balon (10 kazanılan + 12 jetonla), 3 tema (yıldız / jeton / IAP). Sayfalı panel, iki dokunuşla satın alma.
+
 ## 14. Ses ve müzik (M3, uygulandı)
 - SFX: sentez (patlama, gıcırtı, sıkışma, tıslama/söndürme döngüleri, rüzgâr, tik, vınlama, arpej).
 - Müzik: 4 katmanlı uyarlanabilir döngü (pad, bas, arpej, perküsyon; Am–F–C–G, 120 BPM), işçi iş parçacığında açılışta sentezlenir. Menüde sadece pad; oyunda bas; büyüklükle arpej; rüzgâr/yüksek ilerlemede perküsyon.

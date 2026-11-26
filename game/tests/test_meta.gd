@@ -70,12 +70,15 @@ func test_i18n_complete() -> void:
 				var txt: String = row[lang]
 				assert_eq(txt.count("%d"), String(row.en).count("%d"), "%s/%s %%d count" % [key, lang])
 				assert_eq(txt.count("%s"), String(row.en).count("%s"), "%s/%s %%s count" % [key, lang])
-	for n in range(1, LevelBuilder.level_count() + 1):
-		if n < I18n.FIRST_WORLD_LEVEL:
-			assert_true(d.strings.has("level_%d" % n), "level %d name" % n)
-		else:
-			var w := (n - I18n.FIRST_WORLD_LEVEL) / I18n.WORLD_SIZE + 1
-			assert_true(d.strings.has("world_%d" % w), "world %d name (level %d)" % [w, n])
+	for n in range(1, I18n.FIRST_WORLD_LEVEL):
+		assert_true(d.strings.has("level_%d" % n), "level %d name" % n)
+	for w in range(1, I18n.WORLD_NAMES + 1):
+		assert_true(d.strings.has("world_%d" % w), "world %d name" % w)
+	I18n.set_lang("en")
+	assert_eq(I18n.level_name(16), "Wind Valley")
+	assert_eq(I18n.level_name(50), "Last Breath")
+	assert_eq(I18n.level_name(51), "Wind Valley 2", "worlds repeat with a tier number")
+	assert_eq(I18n.level_name(16 + 5 * 7 * 2), "Wind Valley 3")
 	for st in ArtStyle.IDS:
 		assert_true(d.strings.has("theme_" + st), "theme name " + st)
 
@@ -125,3 +128,54 @@ func test_reserved_firebase_event_names_unused() -> void:
 	var src := FileAccess.get_file_as_string("res://src/services/analytics.gd") + FileAccess.get_file_as_string("res://src/game/game_screen.gd") + FileAccess.get_file_as_string("res://src/app/home_screen.gd") + FileAccess.get_file_as_string("res://src/services/platform.gd")
 	for reserved in ["\"session_start\"", "\"first_open\"", "\"screen_view\"", "\"app_update\"", "\"user_engagement\"", "\"error\""]:
 		assert_true(not src.contains("log_event(" + reserved), "reserved Firebase event " + reserved)
+
+func test_missions_deterministic_and_claim_flow() -> void:
+	var p := _profile()
+	var a: Array = p.missions_today().duplicate(true)
+	assert_eq(a.size(), 3)
+	var types := {}
+	for mi in a:
+		types[mi.type] = true
+		assert_true(int(mi.reward) >= 40 and int(mi.reward) <= 120, "reward range")
+	assert_eq(types.size(), 3, "three different mission types")
+	var p2 := _profile()
+	assert_eq(JSON.stringify(p2.missions_today()), JSON.stringify(a), "same day → same missions")
+	p.data.missions.day = p.today() - 1                       # simulate yesterday's set
+	p.data.missions.list = [{"type": "levels", "target": 3, "progress": 3, "claimed": false, "reward": 40}]
+	assert_eq(p.missions_today().size(), 3, "new day regenerates")
+	var m0: Dictionary = p.missions_today()[0]
+	assert_eq(p.claim_mission(0), 0, "cannot claim unfinished")
+	p.mission_add(m0.type, 9999)
+	assert_eq(int(p.missions_today()[0].progress), int(m0.target), "progress clamps at target")
+	var before: int = p.coins()
+	var got: int = p.claim_mission(0)
+	assert_eq(got, int(m0.reward))
+	assert_eq(p.coins(), before + got)
+	assert_eq(p.claim_mission(0), 0, "cannot claim twice")
+	assert_true(not p.bonus_available(), "bonus needs all three")
+	for i in [1, 2]:
+		p.mission_add(p.missions_today()[i].type, 9999)
+		p.claim_mission(i)
+	assert_true(p.bonus_available())
+	assert_eq(p.claim_bonus(), p.MISSION_BONUS)
+	assert_eq(p.claim_bonus(), 0, "bonus once")
+	p.free(); p2.free()
+
+func test_coin_shop() -> void:
+	var p := _profile()
+	assert_true(not p.buy_skin("disco"), "cannot buy without coins")
+	assert_eq(p.coins(), 0, "failed purchase spends nothing")
+	p.add_coins(1300, "test")
+	assert_true(p.buy_skin("disco"))
+	assert_eq(p.coins(), 100)
+	assert_eq(String(p.data.skin), "disco", "bought skin equipped")
+	assert_true(not p.buy_skin("disco"), "cannot buy twice")
+	assert_true(not p.buy_skin("ghost"), "ad-only skin not for coins")
+	p.add_coins(2000, "test")
+	assert_true(p.buy_style("gece"))
+	assert_true(p.data.owned_styles.has("gece"))
+	assert_eq(p.level_coins(3), 20)
+	assert_eq(p.level_coins(0), 5)
+	for s in Skins.SHOP:
+		assert_true(Skins.ALL.has(s), "shop skin listed: " + s)
+	p.free()

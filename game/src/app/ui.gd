@@ -118,6 +118,15 @@ static func icon(ci: CanvasItem, kind: String, c: Vector2, s: float, col: Color)
 		"balloon":
 			ci.draw_circle(c + Vector2(0, -s * 0.15), s * 0.7, col)
 			ci.draw_line(c + Vector2(0, s * 0.55), c + Vector2(s * 0.1, s * 1.0), col, 3.0)
+		"coin":
+			ci.draw_circle(c, s, Color("f2b632"))
+			ci.draw_circle(c, s * 0.72, Color("ffd760"))
+			ci.draw_rect(Rect2(c - Vector2(s * 0.12, s * 0.42), Vector2(s * 0.24, s * 0.84)), Color("f2b632"))
+		"list":
+			for i in 3:
+				var y := c.y + (i - 1) * s * 0.6
+				ci.draw_circle(Vector2(c.x - s * 0.62, y), s * 0.13, col)
+				ci.draw_line(Vector2(c.x - s * 0.35, y), Vector2(c.x + s * 0.75, y), col, s * 0.2)
 		"noads":
 			ci.draw_arc(c, s * 0.8, 0, TAU, 24, col, s * 0.18)
 			ci.draw_line(c + Vector2(-s * 0.55, -s * 0.55), c + Vector2(s * 0.55, s * 0.55), col, s * 0.18)

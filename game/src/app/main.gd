@@ -87,6 +87,9 @@ func _parse_cli() -> void:
 			"unlock":
 				cli.unlock = int(a[i + 1])
 				i += 1
+			"coins":
+				cli.coins = int(a[i + 1])
+				i += 1
 			"lang":
 				cli.lang = a[i + 1]
 				i += 1
@@ -115,6 +118,9 @@ func open_home(panel := "") -> void:
 	var h = HomeScreenScript.new()
 	h.main = self
 	h.open_panel = "" if panel == "home" else panel
+	if panel.begins_with("skins") and panel.length() > 5:     # "skins2" → shop page 2 (store shots)
+		h.open_panel = "skins"
+		h.skins_page = int(panel.substr(5)) - 1
 	Music.set_mood(0.0, 0.0, false)
 	_swap(h)
 
@@ -154,8 +160,19 @@ func _demo_profile() -> void:
 	d.owned_skins = ["classic", "stripes", "dots", "melon", "stars", "ghost"]
 	d.skin = "stripes"
 	d.owned_styles = ["kagit", "gece"]
+	d.coins = int(cli.get("coins", 740))
 
 # ------------------------------------------------------------------ QA
+## Taps the centre of a button the current screen drew last frame (by id), so the
+## walk survives layout changes. Missing ids are reported as failed steps.
+func _tap_id(id: String, hold_s := 0.08) -> void:
+	await get_tree().process_frame
+	for b in screen.get("buttons"):
+		if b.id == id:
+			await _tap((b.rect as Rect2).get_center(), hold_s)
+			return
+	print("SELFTEST missing button: ", id)
+
 func _tap(p: Vector2, hold_s := 0.08) -> void:
 	var d := InputEventScreenTouch.new()
 	d.position = p
@@ -175,38 +192,43 @@ func _selftest() -> void:
 	var steps: Array[String] = []
 	await get_tree().create_timer(0.5).timeout
 	print("SELFTEST start screen=", screen.get_script().resource_path)
-	await _tap(Vector2(360, 1102))                 # PLAY → level 1
+	await _tap_id("play")                          # PLAY → level 1
 	print("SELFTEST after play screen=", screen.get_script().resource_path)
 	steps.append("open_level:%s" % (screen.get("mode") == "level"))
 	await _tap(Vector2(360, 900), 1.6)             # hold to inflate
 	await get_tree().create_timer(1.0).timeout
-	await _tap(Vector2(62, 66))                    # home button
+	await _tap_id("home")                          # home button
 	steps.append("back_home:%s" % (screen.get("open_panel") != null))
-	for id in [Vector2(130, 1214), Vector2(360, 1214), Vector2(W_SET.x, W_SET.y)]:
-		await _tap(id)                             # skins / themes / settings panels
+	for id in ["skins", "themes", "missions", "settings"]:
+		await _tap_id(id)                          # panels
 		steps.append("panel:%s" % screen.get("open_panel"))
 		print("SELFTEST ", steps[-1])
 		notification(NOTIFICATION_WM_GO_BACK_REQUEST)   # back closes the panel
 		await get_tree().create_timer(0.2).timeout
-	await _tap(W_SET)                              # settings → language panel
-	await _tap(Vector2(360, 604))
+	await _tap_id("skins")                         # shop paging + two-tap purchase guard
+	await _tap_id("skins_next")
+	steps.append("skins_page:%s" % (screen.get("skins_page") == 1))
+	notification(NOTIFICATION_WM_GO_BACK_REQUEST)
+	await get_tree().create_timer(0.2).timeout
+	await _tap_id("settings")                      # settings → language panel
+	await _tap_id("lang")
 	steps.append("lang_panel:%s" % (screen.get("open_panel") == "lang"))
-	await _tap(Vector2(207, 415))                  # English
+	await _tap_id("setlang:en")                    # English
 	steps.append("lang_en:%s" % (I18n.lang == "en"))
-	await _tap(Vector2(360, 604))
-	await _tap(Vector2(207, 721))                  # 日本語
+	await _tap_id("lang")
+	await _tap_id("setlang:ja")                    # 日本語
 	steps.append("lang_ja:%s" % (I18n.lang == "ja"))
-	await _tap(Vector2(360, 604))
-	await _tap(Vector2(207, 313))                  # follow system
+	await _tap_id("lang")
+	await _tap_id("setlang:")                      # follow system
 	steps.append("lang_auto:%s" % (String(Profile.data.settings.lang) == ""))
 	notification(NOTIFICATION_WM_GO_BACK_REQUEST)
 	await get_tree().create_timer(0.2).timeout
 	var page0: int = screen.get("grid_page")
-	await _tap(Vector2(W_ARROW_NEXT.x, W_ARROW_NEXT.y))   # level grid: next page
+	await _tap_id("page_next")                     # level grid: next page
 	steps.append("page_next:%s" % (screen.get("grid_page") == page0 + 1))
-	await _tap(Vector2(27, 845))                   # previous page
+	await _tap_id("page_prev")                     # previous page
 	steps.append("page_prev:%s" % (screen.get("grid_page") == page0))
-	await _tap(Vector2(360, 580))                  # daily card
+	await _tap_id("daily")                         # daily card
 	steps.append("open_daily:%s" % (screen.get("mode") == "daily"))
 	await _tap(Vector2(360, 900), 1.0)
 	notification(NOTIFICATION_WM_GO_BACK_REQUEST)  # back from game → home

@@ -20,7 +20,7 @@ GATE 1: ŞİŞ. GATE 2: Kâğıt Kesik (D13). Durum: `docs/PROGRESS.md`.
 
 ## Komutlar
 - İçe aktarma (yeni `class_name` eklenince şart): `cd game && godot --headless --path . --import`
-- Testler: `cd game && godot --headless --path . -s res://tools/run_tests.gd` (~5–6 dk, 50 bölüm uzman çözümü dahil; çıkış kodu 0 = yeşil)
+- Testler: `cd game && godot --headless --path . -s res://tools/run_tests.gd` (~6 dk, 50 bölüm + banka örneklemi uzman çözümü dahil; çıkış kodu 0 = yeşil)
 - Script derleme kontrolü: `-s res://tools/check_scripts.gd` (autoload kullanan dosyalar burada yanlış alarm verir; onları selftest doğrular)
 - Bölüm doğrulama: `-s res://tools/validate_levels.gd -- <ilk> <son> <koşu> [planner|expert|heuristic]`
 - Tek tur izleme: `-s res://tools/trace.gd -- <bölüm> <beceri> <seed> <her_n_kare>`; video için tohum bulma: `-s res://tools/find_run.gd -- <bölüm> <beceri> won|popped <maks_kare>`
@@ -33,6 +33,7 @@ GATE 1: ŞİŞ. GATE 2: Kâğıt Kesik (D13). Durum: `docs/PROGRESS.md`.
 - Mağaza görüntüsü/video kaydı: `scripts/capture.sh <dizin> <kare> <fps> [demo] [lang xx] [style s] (shot home|skins|themes|settings | autoplay ...)`
 - Kısa video klipleri: `scripts/director.py [tarif...]` → `media/clips/` + `clips.csv`
 - Kampanya bölümü üretimi: `-s res://tools/gen_levels.gd -- <adet> <tohum> <d_min> <d_max> <çıktı.json>` → `scripts/select_levels.py <ilk> <son> aday*.json` → `game/data/levels/NN.json` (sonra testler)
+- Sonsuz kampanya bankası (51+): `-s res://tools/gen_bank.gd -- <ilk_indeks> <adet> <tohum> <çıktı.json>` (paralel parçalar) → indekse göre birleştir → `game/data/levels/bank.json`. Banka bitince aynalı tur otomatik.
 - Günlük havuz: `-s res://tools/gen_daily.gd -- <adet> <tohum> <çıktı>`; par süreleri: `-s res://tools/compute_par.gd`; ikon: `xvfb-run ... -s res://tools/make_icon.gd`
 - Not: `-s` ile çalışan araçlarda autoload yok; autoload kullanan kodu oyunu çalıştırarak doğrula.
 

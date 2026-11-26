@@ -24,6 +24,13 @@ static func unlock_stars(style_id: String) -> int:
 		"pastel": return 40
 	return 0
 
+## Alternative coin price for a theme (shop), 0 = not for sale.
+static func coin_price(style_id: String) -> int:
+	match style_id:
+		"gece": return 1500
+		"pastel": return 2500
+	return 0
+
 static func make(style_id: String) -> ArtStyle:
 	var s := ArtStyle.new()
 	s.id = style_id

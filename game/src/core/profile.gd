@@ -33,6 +33,9 @@ func _defaults() -> Dictionary:
 		"sessions": 0,
 		"levels_since_interstitial": 0,
 		"consent_done": false,
+		"coins": 0,
+		"coins_earned": 0,      # lifetime (analytics / balancing)
+		"missions": {"day": -1, "list": [], "bonus_claimed": false},
 	}
 
 func load_profile() -> void:
@@ -164,3 +167,127 @@ func toggle_setting(key: String) -> void:
 func set_ads_removed() -> void:
 	data.ads_removed = true
 	save()
+
+# ------------------------------------------------------------- economy
+## Coins per finished level: base + per star (replays pay too: no energy limits).
+const COINS_LEVEL_BASE := 5
+const COINS_PER_STAR := 5
+const COINS_DAILY_FIRST := 50
+const MISSION_BONUS := 100
+## type: [min target, max target, coins per unit]
+const MISSION_TYPES := {
+	"levels": [3, 8, 12],
+	"stars": [6, 15, 6],
+	"squeeze": [15, 40, 2],
+	"daily": [1, 1, 60],
+	"three_star": [2, 5, 20],
+	"near_miss": [4, 12, 7],
+}
+
+func coins() -> int:
+	return int(data.get("coins", 0))
+
+func add_coins(n: int, source: String) -> void:
+	if n <= 0:
+		return
+	data.coins = coins() + n
+	data.coins_earned = int(data.get("coins_earned", 0)) + n
+	save()
+	if is_inside_tree() and has_node("/root/Analytics"):
+		get_node("/root/Analytics").log_event("coins_earn", {"amount": n, "source": source})
+
+func spend_coins(n: int) -> bool:
+	if n <= 0 or coins() < n:
+		return false
+	data.coins = coins() - n
+	save()
+	return true
+
+func level_coins(stars: int) -> int:
+	return COINS_LEVEL_BASE + COINS_PER_STAR * clampi(stars, 0, 3)
+
+func buy_skin(skin: String) -> bool:
+	var rule := Skins.unlock_rule(skin)
+	if not rule.has("coins") or data.owned_skins.has(skin):
+		return false
+	if not spend_coins(int(rule.coins)):
+		return false
+	data.owned_skins.append(skin)
+	data.skin = skin
+	save()
+	return true
+
+func buy_style(st: String) -> bool:
+	var price := ArtStyle.coin_price(st)
+	if price <= 0 or data.owned_styles.has(st) or not spend_coins(price):
+		return false
+	data.owned_styles.append(st)
+	data.style = st
+	save()
+	return true
+
+## Today's three missions, generated deterministically from the date so they are
+## stable across restarts and identical for everyone on the same day.
+func missions_today() -> Array:
+	var d := today()
+	var m: Dictionary = data.get("missions", {})
+	if int(m.get("day", -1)) != d:
+		var rng := RandomNumberGenerator.new()
+		rng.seed = 7700 + d
+		var types: Array = MISSION_TYPES.keys()
+		var picked: Array = []
+		while picked.size() < 3:
+			var ty: String = types[rng.randi() % types.size()]
+			if not picked.has(ty):
+				picked.append(ty)
+		var list: Array = []
+		for ty in picked:
+			var spec: Array = MISSION_TYPES[ty]
+			var target := rng.randi_range(spec[0], spec[1])
+			list.append({"type": ty, "target": target, "progress": 0, "claimed": false,
+				"reward": clampi(target * int(spec[2]), 40, 120)})
+		data.missions = {"day": d, "list": list, "bonus_claimed": false}
+		save()
+	return data.missions.list
+
+## Progress is saved with the next save() (end of level) to avoid disk writes per event.
+func mission_add(type: String, amount := 1) -> void:
+	for mi in missions_today():
+		if mi.type == type and not mi.claimed:
+			mi.progress = mini(int(mi.progress) + amount, int(mi.target))
+
+func mission_done(mi: Dictionary) -> bool:
+	return int(mi.progress) >= int(mi.target)
+
+func claim_mission(i: int) -> int:
+	var list := missions_today()
+	if i < 0 or i >= list.size():
+		return 0
+	var mi: Dictionary = list[i]
+	if mi.claimed or not mission_done(mi):
+		return 0
+	mi.claimed = true
+	add_coins(int(mi.reward), "mission")
+	return int(mi.reward)
+
+func bonus_available() -> bool:
+	if bool(data.missions.get("bonus_claimed", false)):
+		return false
+	for mi in missions_today():
+		if not mi.claimed:
+			return false
+	return true
+
+func claim_bonus() -> int:
+	if not bonus_available():
+		return 0
+	data.missions.bonus_claimed = true
+	add_coins(MISSION_BONUS, "mission_bonus")
+	return MISSION_BONUS
+
+func claimable_count() -> int:
+	var n := 0
+	for mi in missions_today():
+		if not mi.claimed and mission_done(mi):
+			n += 1
+	return n + (1 if bonus_available() else 0)

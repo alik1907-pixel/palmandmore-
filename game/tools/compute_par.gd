@@ -1,7 +1,7 @@
 extends SceneTree
 ## Writes "par" (expert planner seconds) into every data/levels/NN.json.
 func _init() -> void:
-	for n in range(1, LevelBuilder.level_count() + 1):
+	for n in range(1, LevelBuilder.campaign_file_count() + 1):
 		var path := "res://data/levels/%02d.json" % n
 		var spec: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(path))
 		seed(n)

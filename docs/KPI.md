@@ -36,5 +36,8 @@ Olaylar cihazda `user://events.jsonl` dosyasına (son 3000 satır) yazılır ve 
 | skin_equip / theme_equip | skin / theme | Kozmetik ilgisi |
 | language | lang, auto | Dil tercihleri (yerelleştirme önceliği) |
 | text_size | scale | Erişilebilirlik ayarı kullanımı |
+| coins_earn | amount, source (level/daily/mission/mission_bonus/double_ad) | Ekonomi akışı |
+| mission_claim | reward | Görev tamamlama oranı |
+| shop_buy | item, price | Jeton harcama, mağaza dönüşümü |
 
 **Kapalı testte veri toplama:** Test kullanıcısından `adb pull /sdcard/Android/data/com.palmandmore.sis/files/...` istemek pratik değil. Kapalı test KPI'ları Play Console istatistiklerinden (yükleme, kaldırma, ANR, çökme) + geri bildirim formundan alınır. Yumuşak lansman için uzak analitik gerekir. Firebase entegrasyonu hazır; açmak için yapımcının Firebase projesinden 4 kimlik gerekiyor (LAUNCH §2b).

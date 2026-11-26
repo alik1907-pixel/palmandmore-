@@ -27,7 +27,8 @@ Kod, içerik, mağaza materyali ve yayın paketi hazır. Kalan işlerin hepsi ya
 - Ana menü (canlı maskot), bölüm ızgarası, ★ sistemi (par = uzman süresi), günlük kuyu (60 doğrulanmış bölüm), seri, kostüm/tema kilitleri, paylaşım metni (8 dil), değerlendirme isteği.
 - Olay şeması uygulandı (KPI.md), olaylar cihazda tutuluyor.
 - [ ] Haftalık lig / küresel patlama ısı haritası: backend gerekir (D17). Olaylar konumla kaydediliyor.
-- [x] **50 kampanya bölümü** (15 el yapımı + 35 üretilmiş/doğrulanmış, 7 dünya) + 60 günlük kuyu = 110 oynanabilir bölüm (D23).
+- [x] **~1950 bölümlük kampanya**: 15 el yapımı + 35 seçilmiş + 952 bankadan (her biri uzman botla çözüldü) + aynalı ikinci tur; ortalama par 25,6 sn. 60 günlük kuyu ayrıca (D23, D24).
+- [x] **Jeton ekonomisi + günlük görevler + jeton mağazası** (12 yeni balon, temalar jetonla), "2× jeton" ödüllü reklamı; enerji/can yok (D25).
 - [x] **Yazı boyutu ayarı** (Normal/Büyük/Çok büyük, taşan metin otomatik küçülür) (D21).
 - [x] **Firebase Analytics** köprüsü hazır; yapımcının Firebase kimlikleriyle açılır (D22, LAUNCH §2b).
 
@@ -38,7 +39,7 @@ Kod, içerik, mağaza materyali ve yayın paketi hazır. Kalan işlerin hepsi ya
 - [ ] Ek mediation ağları: AdMob paneli + adaptör bağımlılığı (sonra).
 
 ## M6 — Kalite: TAMAM (cihaz ölçümleri hariç)
-- 21 otomatik test yeşil (50 bölüm uzman tarafından çözülüyor, çeviri tamlığı, Firebase kapısı, yazı sığdırma dahil): replay determinizmi, kurallar, 15 bölüm + günlük havuz örneklemi çözülebilir, profil/seri kuralları, i18n tamlığı, yapılandırma.
+- 24 otomatik test yeşil (50 bölüm + banka örneklemi + aynalıları uzman tarafından çözülüyor, ayna yansıması, görev/mağaza ekonomisi, çeviri, Firebase kapısı, yazı sığdırma): replay determinizmi, kurallar, 15 bölüm + günlük havuz örneklemi çözülebilir, profil/seri kuralları, i18n tamlığı, yapılandırma.
 - Uçtan uca arayüz öz-testi (`-- selftest`) yeşil, çıkışta sızıntı yok.
 - Android davranışları: geri tuşu, arka plana atılınca basılı tutmanın bırakılması, çoklu parmak, atomik kayıt.
 - AAB 57 MB (iki mimari; cihaz başına ~25–30 MB indirme, tahmin).

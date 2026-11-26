@@ -50,13 +50,16 @@ static func t(key: String) -> String:
 ## world (5 levels per world): "Wind Valley", "Thorn Garden", ...
 const FIRST_WORLD_LEVEL := 16
 const WORLD_SIZE := 5
+const WORLD_NAMES := 7
 
 static func level_name(n: int) -> String:
 	_ensure()
 	if _strings.has("level_%d" % n):
 		return t("level_%d" % n)
-	var w := (n - FIRST_WORLD_LEVEL) / WORLD_SIZE + 1
-	return t("world_%d" % w) if _strings.has("world_%d" % w) else ""
+	var w := (n - FIRST_WORLD_LEVEL) / WORLD_SIZE         # 0-based world index
+	var base := t("world_%d" % (w % WORLD_NAMES + 1))
+	var tier := w / WORLD_NAMES                           # worlds repeat: "Wind Valley 2", ...
+	return base if tier == 0 else "%s %d" % [base, tier + 1]
 
 static func lang_name(code: String) -> String:
 	_ensure()

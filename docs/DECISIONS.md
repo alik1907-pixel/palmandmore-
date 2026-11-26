@@ -99,3 +99,15 @@
 - 12 koşuluk doğrulama: 17. bölümde %75 → 50. bölümde %8 (gürültü ±%14). Uzman 50/50 (otomatik test).
 - 16+ bölümler 5'erli 7 dünyada ve dünya adıyla gösteriliyor (Rüzgâr Vadisi… Son Nefes, 15 dil). Ana menü ızgarası 15'lik sayfalara bölündü, sıradaki bölümün sayfasında açılıyor.
 - Sınır: üretilmiş bölümlerde el yapımı bölümlerdeki "tek fikir öğret" kurgusu yok; insan testinde sıkıcı/haksız bulunanlar elle düzeltilecek.
+
+## D24 — "Günlerce, günde saatlerce oynanabilir" isteği · 2026-11-26
+- **Sınırsıza yakın kampanya:** 50 bölümden sonra ~950 bölümlük, çevrimdışı üretilmiş ve her biri uzman bot tarafından çözülmüş banka (`data/levels/bank.json`). Banka bitince aynı bölümler ayna görüntüsüyle ikinci tur (fizik simetrik → çözülebilirlik korunuyor, test ediliyor). Toplam ~1950 bölüm; par ortalaması ~25 sn → saf oyun ~13 saat, tekrar denemelerle onlarca saat. Zorluk: yavaş yükselen ortalama + 10 bölümlük dalga (zor bölümlerden sonra nefes aldıran bölümler).
+- Dünya adları 7'li döngüde tekrar eder, kademe numarasıyla: "Rüzgâr Vadisi 2", "… 3".
+- **Enerji/can sistemi yok:** oyuncu istediği kadar oynar (karanlık kalıp yok).
+- Not: "sonsuz koşu" yasağı türün klonunu kapsar; burada her bölüm ayrı, bitişi olan, tasarlanmış bir bulmaca. Sonsuz akan tek bölüm yok.
+
+## D25 — Jeton ekonomisi ve günlük görevler · 2026-11-26
+- Kazanç: bölüm başına 5 + 5×yıldız (tekrar oynamak da kazandırır), günün ilk günlük kuyusu +50, görev 40–120, tüm görevler +100, sonuçta isteğe bağlı ödüllü reklam "2× jeton".
+- Harcama: 12 jetonlu balon (150–1200), temalar (Neon Gece 1500, Pastel Gün 2500; yıldızla ücretsiz açılma yolu ve IAP sürüyor). Satın alma iki dokunuşla (yanlışlıkla harcama yok).
+- Günlük görevler: 6 türden 3'ü (bölüm, yıldız, sıkışma, günlük kuyu, 3★, kıl payı); tarih tohumlu → herkese aynı, yeniden başlatmada sabit. Rozet sayacı ana menüde.
+- Denge tahmini: saatte ~10 bölüm × ~15 jeton ≈ 150 + görevler ~250/gün → en pahalı balon (disko) ~3–4 günlük düzenli oyunla. Gerçek veriyle ayarlanacak.
