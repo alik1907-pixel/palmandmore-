@@ -490,7 +490,7 @@ func _btn(id: String, r: Rect2, label: String, primary: bool, icon := "") -> voi
 func _draw_hud() -> void:
 	var ink: Color = st.c.ui
 	_btn("home", Rect2(24, 28, 76, 76), "", false, "home")
-	var title := ("#%d " % level_num) + I18n.t("daily") if mode == "daily" else "%d  %s" % [level_num, String(sim.level.get("name", ""))]
+	var title := ("#%d " % level_num) + I18n.t("daily") if mode == "daily" else "%d  %s" % [level_num, I18n.level_name(level_num)]
 	UI.text_left(self, title, Vector2(120, 80), 34, ink)
 	var bar := Rect2(W - 30, 140, 10, 520)
 	draw_rect(bar, Color(ink, 0.15))

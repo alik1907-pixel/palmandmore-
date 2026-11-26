@@ -79,9 +79,9 @@ Tek tuşla şişip sönen jöle bir balonu dikenli, rüzgârlı, daracık bir ku
 - **Yıldızlar:** ★ bitir · ★★ par×2,0 altında · ★★★ par×1,35 altında. Par = uzman planlayıcı süresi (`tools/compute_par.gd`). Yama kullanılırsa en fazla ★.
 - **Günlük kuyu:** herkese aynı (yerel tarih), 60 doğrulanmış bölümlük havuz; seri dün/bugün oynandıysa sürer; aynı gün tekrar oynamak seriyi şişirmez; günlük en iyi süre saklanır.
 - **Kozmetik:** 10 balon (yıldız ve seri eşikleri, 1 ödüllü reklam, 1 IAP), 3 tema (varsayılan Kâğıt Kesik; Neon Gece 25★; Pastel Gün 40★; "Tüm temalar" IAP).
-- **Paylaşım:** sonuç ekranında sistem paylaşım menüsü; metin: "ŞİŞ Günlük #N 🎈 14.2 sn ⭐⭐⭐ 🔥5 + mağaza linki" (8 dilde).
+- **Paylaşım:** sonuç ekranında sistem paylaşım menüsü; metin: "ŞİŞ Günlük #N 🎈 14.2 sn ⭐⭐⭐ 🔥5 + mağaza linki" (15 dilde).
 - **Değerlendirme isteği:** 6. bölüm ilk kez ★★★ ile bitince, bir kez (Play In-App Review).
-- **Ayarlar:** ses, müzik, titreşim, dil (8 dil; varsayılan sistem dili), reklamsız, satın alımları geri yükle, gizlilik seçenekleri (UMP gerekiyorsa), gizlilik politikası.
+- **Ayarlar:** ses, müzik, titreşim, dil (15 dil: TR, EN, ES, PT, ID, HI, DE, JA, FR, IT, RU, KO, ZH, VI, TH; varsayılan sistem dili, desteklenmiyorsa İngilizce), reklamsız, satın alımları geri yükle, gizlilik seçenekleri (UMP gerekiyorsa), gizlilik politikası.
 - **Android:** geri tuşu (panel kapat → menü → çıkış), arka plana atılınca basılı tutma bırakılır, çoklu parmak desteği.
 
 ## 14. Ses ve müzik (M3, uygulandı)

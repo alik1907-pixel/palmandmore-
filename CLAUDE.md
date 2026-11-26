@@ -14,6 +14,7 @@ GATE 1: ŞİŞ. GATE 2: Kâğıt Kesik (D13). Durum: `docs/PROGRESS.md`.
 - Android: SDK `/opt/android-sdk` (platform 36, build-tools 36), Godot Gradle şablonu `game/android/build` (git'te yok; kurulum: `unzip ~/.local/share/godot/export_templates/4.7.2.stable/android_source.zip -d game/android/build` + `game/android/.build_version`). Editor ayarı: `~/.config/godot/editor_settings-4.7.tres` → android_sdk_path, debug_keystore.
 - Yerel eklenti: `android_plugin/` (Kotlin, `./gradlew :plugin:assembleRelease`) → AAR'ı `game/addons/sis_platform/bin/SisPlatform-release.aar` üzerine kopyala.
 - Autoload'lar: Profile (kayıt), Analytics, Platform (onay/reklam/ödeme/paylaşım), Music. Kök sahne `src/app/main.tscn` (ekran değiştirici + arka plan shader'ı).
+- Çeviriler: `game/data/i18n.json` (15 dil; yeni metin anahtarı eklerken tüm dilleri doldur, test kontrol eder).
 - Yapılandırma: `game/data/platform.json` (AdMob/ürün kimlikleri; şu an Google TEST kimlikleri).
 - Hedef API: Ağustos 2026 itibarıyla yeni uygulamalar API 36 (Android 16) hedeflemeli (bkz. RESEARCH.md).
 

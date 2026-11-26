@@ -8,7 +8,7 @@ Bu bulut oturumu Play Console'a, AdMob'a veya senin hesaplarına giriş yapamaz.
 | İmzalı yayın paketi (AAB, v1.0.0, kod 1, hedef API 36) | `scripts/build_release.sh` → `build/android/sis-release.aab` |
 | Telefon test APK'sı (reklam/ödeme eklentisi dahil, debug imzalı) | `build/android/sis-gradle-debug.apk` |
 | Yükleme anahtarı (upload key) | `secrets/upload.keystore` + `secrets/keystore.properties` (**git'te yok; sana ayrıca gönderildi. İki yerde yedekle.**) |
-| Mağaza metinleri (8 dil) | `docs/STORE_LISTING.md` |
+| Mağaza metinleri (15 dil) | `docs/STORE_LISTING.md` |
 | İkon 512, öne çıkan görsel 1024x500, 8 ekran görüntüsü (TR/EN), 30 sn tanıtım videosu | `media/store/` |
 | Gizlilik politikası (TR/EN) | `docs/privacy.html` |
 | Paket adı | `com.palmandmore.sis` (Play'e ilk yüklemeden sonra **değiştirilemez**; değiştirmek istersen ilk yüklemeden önce söyle) |
@@ -34,7 +34,7 @@ Sonra: `scripts/build_release.sh`. **Test kimlikleriyle canlıya çıkma; kendi 
   - `remove_ads`: "Reklamları kaldır", önerilen 2,99 $
   - `theme_pack`: "Tüm temalar", önerilen 1,99 $
   - `cosmetic_pack`: "Gökkuşağı balon", önerilen 0,99 $
-- **Mağaza girişi:** STORE_LISTING.md metinleri + media/store görselleri (TR ve EN, diğer 6 dil metin olarak).
+- **Mağaza girişi:** STORE_LISTING.md metinleri + media/store görselleri (TR ve EN görsellerle; diğer 13 dil metin olarak, görseller EN setiyle).
 
 ## 4. Uygulama içeriği beyanları (önerilen cevaplar)
 | Beyan | Cevap |

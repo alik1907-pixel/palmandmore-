@@ -174,6 +174,19 @@ func _selftest() -> void:
 		print("SELFTEST ", steps[-1])
 		notification(NOTIFICATION_WM_GO_BACK_REQUEST)   # back closes the panel
 		await get_tree().create_timer(0.2).timeout
+	await _tap(W_SET)                              # settings → language panel
+	await _tap(Vector2(360, 664))
+	steps.append("lang_panel:%s" % (screen.get("open_panel") == "lang"))
+	await _tap(Vector2(207, 415))                  # English
+	steps.append("lang_en:%s" % (I18n.lang == "en"))
+	await _tap(Vector2(360, 664))
+	await _tap(Vector2(207, 721))                  # 日本語
+	steps.append("lang_ja:%s" % (I18n.lang == "ja"))
+	await _tap(Vector2(360, 664))
+	await _tap(Vector2(207, 313))                  # follow system
+	steps.append("lang_auto:%s" % (String(Profile.data.settings.lang) == ""))
+	notification(NOTIFICATION_WM_GO_BACK_REQUEST)
+	await get_tree().create_timer(0.2).timeout
 	await _tap(Vector2(360, 580))                  # daily card
 	steps.append("open_daily:%s" % (screen.get("mode") == "daily"))
 	await _tap(Vector2(360, 900), 1.0)

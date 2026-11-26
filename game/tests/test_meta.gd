@@ -58,9 +58,34 @@ func test_profile_streak_rules() -> void:
 	p.free()
 
 func test_i18n_complete() -> void:
-	for key in I18n.S:
-		for lang in I18n.LANGS:
-			assert_true((I18n.S[key] as Dictionary).has(lang), "%s missing %s" % [key, lang])
+	var d: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(I18n.PATH))
+	var langs: Array = d._langs
+	assert_true(langs.size() >= 15, "language count %d" % langs.size())
+	assert_true(langs.has("en"), "English present")
+	for key in d.strings:
+		var row: Dictionary = d.strings[key]
+		for lang in langs:
+			assert_true(row.has(lang) and String(row[lang]).strip_edges() != "", "%s missing %s" % [key, lang])
+			if row.has(lang):
+				var txt: String = row[lang]
+				assert_eq(txt.count("%d"), String(row.en).count("%d"), "%s/%s %%d count" % [key, lang])
+				assert_eq(txt.count("%s"), String(row.en).count("%s"), "%s/%s %%s count" % [key, lang])
+	for n in range(1, LevelBuilder.level_count() + 1):
+		assert_true(d.strings.has("level_%d" % n), "level %d name" % n)
+	for st in ArtStyle.IDS:
+		assert_true(d.strings.has("theme_" + st), "theme name " + st)
+
+func test_i18n_fallback_and_formatting() -> void:
+	I18n.set_lang("xx")
+	assert_eq(I18n.lang, "en", "unknown language falls back to English")
+	for lang in I18n.langs():
+		I18n.set_lang(lang)
+		var a: String = I18n.t("share_level") % [3, "12.5", "⭐⭐"]
+		var b: String = I18n.t("share_daily") % [7, "20.1", "⭐", 4]
+		var c: String = I18n.t("locked_stars") % 25
+		assert_true(a.contains("3") and b.contains("7") and c.contains("25"), "format " + lang)
+	I18n.set_lang("en")
+	assert_eq(I18n.level_name(1), "First Breath")
 
 func test_skins_and_styles_have_rules() -> void:
 	for s in Skins.ALL:

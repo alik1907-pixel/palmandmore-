@@ -1,4 +1,4 @@
-# STORE_LISTING.md: Google Play mağaza metinleri (8 dil)
+# STORE_LISTING.md: Google Play mağaza metinleri (15 dil)
 
 Sınırlar: başlık ≤ 30, kısa açıklama ≤ 80, uzun açıklama ≤ 4000 karakter.
 **ASO notu:** Anahtar kelimeler mekaniği tarif eden terimlerden seçildi (balloon, inflate, squeeze, one tap, physics, puzzle, daily). Gerçek arama hacmi bir ASO aracıyla ölçülmedi: DOĞRULANMADI. Yayından 2 hafta sonra Play Console arama terimleri raporuyla güncellenecek.
@@ -76,6 +76,41 @@ One touch. Endless mastery. How far can you squeeze?
 **タイトル:** ŞİŞ: バルーン・スクイーズ
 **短い説明 (≤80):** 長押しでふくらむ、離すとしぼむ。狭いすき間を抜けてトゲをよけよう！
 **詳しい説明:** ŞİŞ は指一本で遊ぶ物理パズル。ぷにぷにのバルーンを細い縦穴の上へ運ぼう。長押しでふくらんで上昇、離すとしぼんで狭いすき間をすり抜ける。風は大きいバルーンほど強く押す。トゲに触れたら…パン！手作りの15ステージ、全員共通のデイリーと連続記録、10種のバルーンと3つのテーマ。すべてコードで描画・合成。オフラインで遊べる。広告は任意（「パッチ」で続行）、広告削除パックあり。
+
+## FR
+**Title:** ŞİŞ : Ballon à presser
+**Short (≤80):** Maintiens pour gonfler, lâche pour rétrécir. Faufile-toi, évite les pics !
+**Long:** ŞİŞ est un puzzle physique à un doigt : guide un ballon tout mou dans un puits étroit. Maintiens pour gonfler et monter ; lâche pour rétrécir et te faufiler dans les passages étroits. Le vent pousse plus fort les gros ballons. Un pic et... POP ! 15 niveaux faits main, un Puits du jour identique pour tous avec séries, 10 ballons et 3 thèmes. Tout est dessiné et synthétisé en code. Jouable hors ligne. Pubs optionnelles pour « rapiécer » et continuer ; pack sans pubs disponible.
+
+## IT
+**Title:** ŞİŞ: Schiaccia il Palloncino
+**Short (≤80):** Tieni premuto per gonfiare, lascia per sgonfiare. Infilati ed evita le spine!
+**Long:** ŞİŞ è un puzzle fisico a un dito: guida un palloncino morbido su per un pozzo stretto. Tieni premuto per gonfiarti e salire; lascia per sgonfiarti e infilarti nei passaggi stretti. Il vento spinge di più i palloncini grandi. Una spina e... POP! 15 livelli fatti a mano, Pozzo del giorno uguale per tutti con serie, 10 palloncini e 3 temi. Tutto disegnato e sintetizzato in codice. Si gioca offline. Pubblicità facoltativa per "rattoppare" e continuare; pacchetto senza pubblicità disponibile.
+
+## RU
+**Title:** ŞİŞ: Сожми шарик
+**Short (≤80):** Держи — шарик надувается, отпусти — сдувается. Протиснись и избегай шипов!
+**Long:** ŞİŞ — физическая головоломка для одного пальца: проведи мягкий шарик вверх по узкому колодцу. Держи палец — шарик надувается и поднимается; отпусти — сдувается и протискивается в узкие щели. Ветер сильнее толкает большие шарики. Одно касание шипа — и ПОП! 15 уровней ручной работы, общий для всех Колодец дня с сериями, 10 шариков и 3 темы. Всё нарисовано и озвучено кодом. Играй без интернета. Реклама по желанию — «заклеить» и продолжить; есть пакет без рекламы.
+
+## KO
+**Title:** ŞİŞ: 풍선 스퀴즈
+**Short (≤80):** 누르면 부풀고, 떼면 줄어들어요. 좁은 틈을 빠져나가고 가시를 피하세요!
+**Long:** ŞİŞ는 손가락 하나로 즐기는 물리 퍼즐입니다. 말랑한 풍선을 좁은 수직 통로 위로 올려 보내세요. 누르면 부풀어 올라가고, 떼면 줄어들어 좁은 틈을 빠져나갑니다. 바람은 큰 풍선을 더 세게 밀어요. 가시에 닿으면... 펑! 직접 만든 15개 레벨, 모두에게 같은 오늘의 우물과 연속 기록, 풍선 10종과 테마 3종. 모든 그래픽과 소리는 코드로 만들어졌습니다. 오프라인 플레이 가능. 광고는 선택 사항(패치로 이어하기), 광고 제거 팩 제공.
+
+## ZH
+**Title:** ŞİŞ：挤气球
+**Short (≤80):** 按住充气，松开放气。挤过窄缝，躲开尖刺！
+**Long:** ŞİŞ 是一款单指物理解谜游戏：让软软的气球穿过狭窄的竖井向上爬。按住充气上升，松开放气，借着冲劲挤过窄缝。风对大气球的推力更强。碰到尖刺……啪！15 个精心设计的关卡，所有人相同的每日竖井与连续记录，10 款气球和 3 种主题。所有画面和声音都由代码生成。支持离线游玩。广告可选（打补丁继续），提供移除广告礼包。
+
+## VI
+**Title:** ŞİŞ: Bóp Bóng Bay
+**Short (≤80):** Giữ để thổi phồng, thả để xẹp. Lách qua khe hẹp và né gai!
+**Long:** ŞİŞ là trò giải đố vật lý một ngón tay: đưa quả bóng mềm leo lên giếng hẹp. Giữ để bóng phồng lên và bay lên; thả để bóng xẹp và lách qua khe hẹp. Gió đẩy bóng to mạnh hơn. Chạm gai là... BỤP! 15 màn thiết kế thủ công, Giếng mỗi ngày giống nhau cho mọi người kèm chuỗi ngày, 10 bóng và 3 chủ đề. Mọi hình ảnh và âm thanh đều tạo bằng mã. Chơi offline. Quảng cáo tùy chọn để "vá" và chơi tiếp; có gói xóa quảng cáo.
+
+## TH
+**Title:** ŞİŞ: บีบลูกโป่ง
+**Short (≤80):** กดค้างให้พอง ปล่อยให้แฟบ ลอดช่องแคบและหลบหนาม!
+**Long:** ŞİŞ คือเกมพัซเซิลฟิสิกส์ที่เล่นด้วยนิ้วเดียว พาลูกโป่งนุ่มนิ่มขึ้นไปตามบ่อแคบ กดค้างเพื่อให้พองและลอยขึ้น ปล่อยเพื่อให้แฟบและลอดผ่านช่องแคบ ลมจะผลักลูกโป่งใหญ่แรงกว่า แตะหนามเมื่อไหร่... ปัง! 15 ด่านออกแบบเอง บ่อประจำวันเหมือนกันทุกคนพร้อมสถิติต่อเนื่อง ลูกโป่ง 10 แบบและ 3 ธีม ภาพและเสียงทั้งหมดสร้างด้วยโค้ด เล่นออฟไลน์ได้ โฆษณาเป็นทางเลือก (ปะแล้วเล่นต่อ) มีแพ็กลบโฆษณา
 
 ---
 ## A/B deneme planı (Store Listing Experiments)

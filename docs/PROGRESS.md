@@ -23,6 +23,7 @@ Kod, içerik, mağaza materyali ve yayın paketi hazır. Kalan işlerin hepsi ya
 - Erişilebilirlik: ses/müzik/titreşim ayrı ayrı kapatılabilir, tek elle oynanır, diken = renk + şekil (sadece renge dayanmaz). Yazı boyutu ayarı YOK (açık iş).
 
 ## M4 — Tutma ve meta: TAMAM (uzak analitik ve lig hariç)
+- **15 dil** (D20): arayüz, bölüm ve tema adları, paylaşım metinleri, mağaza metinleri; Ayarlar → Dil paneli. Ana dil kontrolü DOĞRULANMADI.
 - Ana menü (canlı maskot), bölüm ızgarası, ★ sistemi (par = uzman süresi), günlük kuyu (60 doğrulanmış bölüm), seri, kostüm/tema kilitleri, paylaşım metni (8 dil), değerlendirme isteği.
 - Olay şeması uygulandı (KPI.md), olaylar cihazda tutuluyor.
 - [ ] Haftalık lig / küresel patlama ısı haritası: backend gerekir (D17). Olaylar konumla kaydediliyor.
@@ -35,14 +36,14 @@ Kod, içerik, mağaza materyali ve yayın paketi hazır. Kalan işlerin hepsi ya
 - [ ] Ek mediation ağları: AdMob paneli + adaptör bağımlılığı (sonra).
 
 ## M6 — Kalite: TAMAM (cihaz ölçümleri hariç)
-- 17 otomatik test yeşil: replay determinizmi, kurallar, 15 bölüm + günlük havuz örneklemi çözülebilir, profil/seri kuralları, i18n tamlığı, yapılandırma.
+- 18 otomatik test yeşil (çeviri tamlığı + biçim dizgileri dahil): replay determinizmi, kurallar, 15 bölüm + günlük havuz örneklemi çözülebilir, profil/seri kuralları, i18n tamlığı, yapılandırma.
 - Uçtan uca arayüz öz-testi (`-- selftest`) yeşil, çıkışta sızıntı yok.
 - Android davranışları: geri tuşu, arka plana atılınca basılı tutmanın bırakılması, çoklu parmak, atomik kayıt.
 - AAB 57 MB (iki mimari; cihaz başına ~25–30 MB indirme, tahmin).
 - [ ] adb ölçümleri (soğuk açılış, monkey, bellek), Android Vitals: telefon + Play ön lansman raporu gerekiyor.
 
 ## M7 — Mağaza ve politika: HAZIR (yükleme yapımcıda)
-- 8 dilde mağaza metni (sınırlar kodla doğrulandı), ekran görüntüleri TR/EN (8'er), öne çıkan görsel TR/EN, 30 sn tanıtım videosu TR/EN, ikon 512.
+- 15 dilde mağaza metni (sınırlar kodla doğrulandı), ekran görüntüleri TR/EN (8'er), öne çıkan görsel TR/EN, 30 sn tanıtım videosu TR/EN, ikon 512.
 - Gizlilik politikası (TR/EN), beyan cevapları, Veri Güvenliği, kapalı test planı ve geri bildirim formu: LAUNCH.md.
 - [ ] Gizlilik politikasının herkese açık URL'si, geliştirici e-postası, (önerilen) alan adı + app-ads.txt.
 

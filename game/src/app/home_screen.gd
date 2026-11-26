@@ -28,6 +28,9 @@ func _ready() -> void:
 
 func go_back() -> bool:
 	## Returns true if handled (closed a panel); false means "leave the app".
+	if open_panel == "lang":
+		open_panel = "settings"
+		return true
 	if open_panel != "":
 		open_panel = ""
 		return true
@@ -81,6 +84,14 @@ func _on_button(id: String) -> void:
 		elif Skins.unlock_rule(s).has("iap"):
 			Platform.buy(Skins.unlock_rule(s).iap)
 		return
+	if id.begins_with("setlang:"):
+		var code := id.substr(8)                     # "" = follow the system language
+		Profile.data.settings.lang = code
+		Profile.save()
+		I18n.detect(code)
+		Analytics.log_event("language", {"lang": I18n.lang, "auto": code == ""})
+		open_panel = "settings"
+		return
 	if id.begins_with("style:"):
 		var st := id.substr(6)
 		if Profile.data.owned_styles.has(st):
@@ -106,9 +117,7 @@ func _on_button(id: String) -> void:
 			Profile.toggle_setting("music")
 			Music.enabled = Profile.setting("music")
 		"haptics": Profile.toggle_setting("haptics")
-		"lang":
-			Profile.data.settings.lang = I18n.next_lang()
-			Profile.save()
+		"lang": open_panel = "lang"
 
 func _on_rewarded(placement: String, ok: bool) -> void:
 	if placement.begins_with("skin:") and ok:
@@ -182,6 +191,7 @@ func _draw() -> void:
 			"skins": _draw_skins(st)
 			"themes": _draw_themes(st)
 			"settings": _draw_settings(st)
+			"lang": _draw_languages(st)
 	if toast_t > 0.0:
 		var a := clampf(toast_t, 0.0, 1.0)
 		UI._round_rect(self, Rect2(160, 110, 400, 70), 30.0, Color(0, 0, 0, 0.7 * a))
@@ -287,7 +297,7 @@ func _draw_themes(st: ArtStyle) -> void:
 		s.draw_wall(self, cell.position + Vector2(40, 150), cell.position + Vector2(200, 80))
 		s.draw_spikes(self, cell.position + Vector2(260, 160), cell.position + Vector2(420, 160))
 		_balloon_preview(cell.position + Vector2(cell.size.x - 110, 95), 50.0, "classic", s)
-		UI.text_left(self, s.name + ("  ✓" if String(Profile.data.style) == id else ""), cell.position + Vector2(24, 50), 30, s.c.ui)
+		UI.text_left(self, I18n.t("theme_" + id) + ("  ✓" if String(Profile.data.style) == id else ""), cell.position + Vector2(24, 50), 30, s.c.ui)
 		if not owned:
 			UI.text_left(self, I18n.t("locked_stars") % ArtStyle.unlock_stars(id), cell.position + Vector2(24, 190), 22, s.c.ui)
 		buttons.append({"id": "style:" + id, "rect": cell, "enabled": owned})
@@ -301,7 +311,7 @@ func _draw_settings(st: ArtStyle) -> void:
 	for k in ["sound", "music", "haptics"]:
 		_btn(k, Rect2(r.position.x + 60, y, r.size.x - 120, 88), "%s: %s" % [I18n.t(k), "✓" if Profile.setting(k) else "—"], false)
 		y += 110
-	_btn("lang", Rect2(r.position.x + 60, y, r.size.x - 120, 88), "%s: %s" % [I18n.t("language"), I18n.lang.to_upper()], false)
+	_btn("lang", Rect2(r.position.x + 60, y, r.size.x - 120, 88), "%s: %s" % [I18n.t("language"), I18n.lang_name(I18n.lang)], false)
 	y += 110
 	if not Profile.data.ads_removed:
 		var price := Platform.price_of("remove_ads")
@@ -313,3 +323,20 @@ func _draw_settings(st: ArtStyle) -> void:
 		_btn("privacy", Rect2(r.position.x + 60, y, r.size.x - 120, 88), I18n.t("privacy"), false)
 		y += 110
 	_btn("policy", Rect2(r.position.x + 60, y, r.size.x - 120, 88), I18n.t("privacy_policy"), false)
+
+func _draw_languages(st: ArtStyle) -> void:
+	var r := _panel_frame(st, I18n.t("language"))
+	var ink: Color = st.c.ink if st.id != "gece" else Color.WHITE
+	var saved := String(Profile.data.settings.get("lang", ""))
+	var codes: Array = [""]
+	codes.append_array(Array(I18n.langs()))
+	var col_w := (r.size.x - 90.0) * 0.5
+	for i in codes.size():
+		var code: String = codes[i]
+		var cell := Rect2(r.position.x + 30 + (i % 2) * (col_w + 30), r.position.y + 120 + (i / 2) * 102, col_w, 86)
+		var label := ("⟳ " + OS.get_locale_language().to_upper()) if code == "" else I18n.lang_name(code)
+		var selected := saved == code
+		_btn("setlang:" + code, cell, "", false)
+		if selected:
+			UI._round_rect(self, cell.grow(-6), 18.0, Color(1, 1, 1, 0.25))
+		UI.text_center(self, label + ("  ✓" if selected else ""), cell.get_center() + Vector2(0, 11), 28, Color.WHITE)

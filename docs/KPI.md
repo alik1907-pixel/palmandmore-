@@ -34,5 +34,6 @@ Olaylar cihazda `user://events.jsonl` dosyasına (son 3000 satır) yazılır ve 
 | iap_click / purchase | product | IAP hunisi |
 | share | – | Viral katsayı girdisi |
 | skin_equip / theme_equip | skin / theme | Kozmetik ilgisi |
+| language | lang, auto | Dil tercihleri (yerelleştirme önceliği) |
 
 **Kapalı testte veri toplama:** Test kullanıcısından `adb pull /sdcard/Android/data/com.palmandmore.sis/files/...` istemek pratik değil. Kapalı test KPI'ları Play Console istatistiklerinden (yükleme, kaldırma, ANR, çökme) + geri bildirim formundan alınır. Yumuşak lansman için uzak analitik gerekir. **Karar noktası (yapımcı):** Firebase Analytics eklenmesi; ek SDK, Veri Güvenliği güncellemesi gerektirir.

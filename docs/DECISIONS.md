@@ -76,3 +76,10 @@
 
 ## D19 — Yükleme anahtarı · 2026-11-26
 - 4096-bit RSA, 10000 gün, `secrets/` (git'te yok). Play App Signing kullanılacağı için kaybolursa Play Console'dan sıfırlanabilir. Yine de iki yerde yedeklenmeli.
+
+## D20 — 15 dil, çeviriler veri dosyasında · 2026-11-26
+- Yapımcı isteği: İngilizce + daha fazla dil. Diller: tr, en, es, pt, id, hi, de, ja, **fr, it, ru, ko, zh (basitleştirilmiş), vi, th**. Desteklenmeyen sistem dili → İngilizce.
+- Çeviriler `game/data/i18n.json` (anahtar → dil → metin): bölüm adları ve tema adları dahil; oyunda Türkçe kalan metin yok. Test: her anahtar her dilde dolu, `%d/%s` sayıları İngilizceyle aynı.
+- Ayarlar → Dil paneli: ana dildeki adlar + "sistem dili" seçeneği.
+- Arapça eklenmedi: sağdan sola düzen için arayüz aynalama gerekiyor (ayrı iş). Çince geleneksel (zh_TW/HK) basitleştirilmiş görür.
+- Çeviriler makine kalitesinde değil ama ana dili konuşan biri tarafından gözden geçirilmedi: DOĞRULANMADI. Kapalı testte ilgili ülkelerden testçilerle kontrol edilmeli.
