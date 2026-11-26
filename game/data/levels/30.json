@@ -1,0 +1,81 @@
+{
+ "name": "",
+ "hint": "",
+ "rows": [
+  {
+   "gap": 132,
+   "space": 250,
+   "type": "gate",
+   "x": 360
+  },
+  {
+   "gap": 110,
+   "space": 400,
+   "throat": 182,
+   "type": "gate",
+   "x": 360
+  },
+  {
+   "gap": 110,
+   "space": 400,
+   "throat": 182,
+   "type": "gate",
+   "x": 360
+  },
+  {
+   "dir": 1.0,
+   "space": 302,
+   "strength": 303,
+   "type": "wind"
+  },
+  {
+   "gap": 114,
+   "space": 150,
+   "spiked": true,
+   "type": "gate",
+   "x": 494
+  },
+  {
+   "gap": 100,
+   "space": 368,
+   "type": "gate",
+   "x": 420
+  },
+  {
+   "gap": 100,
+   "space": 359,
+   "type": "gate",
+   "x": 412
+  },
+  {
+   "gap": 100,
+   "space": 372,
+   "type": "gate",
+   "x": 418
+  },
+  {
+   "dir": 1.0,
+   "space": 260,
+   "strength": 300,
+   "type": "wind"
+  },
+  {
+   "dir": -1.0,
+   "space": 260,
+   "strength": 300,
+   "type": "wind"
+  },
+  {
+   "gap": 120,
+   "space": 150,
+   "spiked": true,
+   "type": "gate",
+   "x": 300
+  }
+ ],
+ "par": 27.1,
+ "generated": true,
+ "seed": 4000010,
+ "difficulty": 0.91,
+ "bot_clear": 0.6
+}

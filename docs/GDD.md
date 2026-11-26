@@ -71,11 +71,12 @@ Tek tuşla şişip sönen jöle bir balonu dikenli, rüzgârlı, daracık bir ku
 - Denge değerleri: `game/data/tuning.tres` (tek dosya). Bölümler: `game/data/levels/*.json`.
 - Bölüm doğrulama: `BalloonPlanner` (simülasyon kopyasında 54 kare ileri bakan MPC bot). Uzman (beceri 1,0) her bölümü kazanmalı (otomatik test). Karma beceri popülasyonunun başarı eğrisi kabaca azalan olmalı.
 
-## 12. Bölüm listesi (M2)
-1 İlk Nefes · 2 Dar Kapı · 3 Ritim · 4 Esinti · 5 Dikenli Huni · 6 Boğaz · 7 Fırtına · 8 Uzun Yol · 9 Tavan · 10 Dikenli Boğaz · 11 Zikzak Tavan · 12 Ters Rüzgâr · 13 Zirve · 14 Eldiven · 15 İğne Deliği
+## 12. Bölüm listesi
+- **El yapımı 1–15:** 1 İlk Nefes · 2 Dar Kapı · 3 Ritim · 4 Esinti · 5 Dikenli Huni · 6 Boğaz · 7 Fırtına · 8 Uzun Yol · 9 Tavan · 10 Dikenli Boğaz · 11 Zikzak Tavan · 12 Ters Rüzgâr · 13 Zirve · 14 Eldiven · 15 İğne Deliği
+- **Dünyalar 16–50** (üretilmiş ve doğrulanmış, D23): 16–20 Rüzgâr Vadisi · 21–25 Diken Bahçesi · 26–30 Dar Geçitler · 31–35 Tavan Arası · 36–40 Fırtına Kulesi · 41–45 İğne Ormanı · 46–50 Son Nefes
 
 ## 13. Meta ve uygulama akışı (M4, uygulandı)
-- **Ana menü:** canlı maskot (gerçek BalloonSim; basılı tutunca şişer), yıldız sayacı, günlük kuyu kartı (#numara + 🔥 seri), 15 bölüm ızgarası (★ 0–3, kilit), OYNA (sıradaki bölüm), Balonlar / Temalar / Reklamsız düğmeleri, Ayarlar.
+- **Ana menü:** canlı maskot (gerçek BalloonSim; basılı tutunca şişer), yıldız sayacı, günlük kuyu kartı (#numara + 🔥 seri), 50 bölümlük, 15'lik sayfalara bölünmüş ızgara (★ 0–3, kilit, sayfa okları), OYNA (sıradaki bölüm), Balonlar / Temalar / Reklamsız düğmeleri, Ayarlar.
 - **Yıldızlar:** ★ bitir · ★★ par×2,0 altında · ★★★ par×1,35 altında. Par = uzman planlayıcı süresi (`tools/compute_par.gd`). Yama kullanılırsa en fazla ★.
 - **Günlük kuyu:** herkese aynı (yerel tarih), 60 doğrulanmış bölümlük havuz; seri dün/bugün oynandıysa sürer; aynı gün tekrar oynamak seriyi şişirmez; günlük en iyi süre saklanır.
 - **Kozmetik:** 10 balon (yıldız ve seri eşikleri, 1 ödüllü reklam, 1 IAP), 3 tema (varsayılan Kâğıt Kesik; Neon Gece 25★; Pastel Gün 40★; "Tüm temalar" IAP).

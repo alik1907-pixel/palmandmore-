@@ -84,6 +84,9 @@ func _parse_cli() -> void:
 			"textscale":
 				cli.textscale = a[i + 1]
 				i += 1
+			"unlock":
+				cli.unlock = int(a[i + 1])
+				i += 1
 			"lang":
 				cli.lang = a[i + 1]
 				i += 1
@@ -142,8 +145,8 @@ func next_level_after(n: int) -> int:
 ## Store-screenshot state: mid-game progress, kept in memory only (never saved).
 func _demo_profile() -> void:
 	var d: Dictionary = Profile.data
-	d.unlocked = 10
-	for i in range(1, 10):
+	d.unlocked = int(cli.get("unlock", 10))
+	for i in range(1, int(d.unlocked)):
 		d.stars[str(i)] = 3 if i % 3 != 0 else 2
 	d.streak = 5
 	d.best_streak = 5
@@ -198,6 +201,11 @@ func _selftest() -> void:
 	steps.append("lang_auto:%s" % (String(Profile.data.settings.lang) == ""))
 	notification(NOTIFICATION_WM_GO_BACK_REQUEST)
 	await get_tree().create_timer(0.2).timeout
+	var page0: int = screen.get("grid_page")
+	await _tap(Vector2(W_ARROW_NEXT.x, W_ARROW_NEXT.y))   # level grid: next page
+	steps.append("page_next:%s" % (screen.get("grid_page") == page0 + 1))
+	await _tap(Vector2(27, 845))                   # previous page
+	steps.append("page_prev:%s" % (screen.get("grid_page") == page0))
 	await _tap(Vector2(360, 580))                  # daily card
 	steps.append("open_daily:%s" % (screen.get("mode") == "daily"))
 	await _tap(Vector2(360, 900), 1.0)
@@ -209,3 +217,4 @@ func _selftest() -> void:
 	quit_clean()
 
 const W_SET := Vector2(648, 70)
+const W_ARROW_NEXT := Vector2(693, 845)

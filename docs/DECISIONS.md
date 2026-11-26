@@ -93,3 +93,9 @@
 - Crashlytics eklenmedi (Gradle eklentisi + mapping gerekir); çökme/ANR için Play Console Android Vitals kullanılacak.
 - `session_start` Firebase'de ayrılmış ad → `app_session`. Test: ayrılmış adlar kullanılmıyor.
 - Doğrulama: sahte kimliklerle derleme → manifest bayrağı ve Firebase sınıfları pakette. Gerçek veri akışı DOĞRULANMADI (gerçek proje + telefon gerekiyor).
+
+## D23 — Kampanya 15 → 50 bölüm (üretilmiş + doğrulanmış) · 2026-11-26
+- 16–50: `LevelGen` el yapımı bölümlerin kalıplarını (rüzgâr kayması, ritim, boğaz, dikenli boğaz, tavan, ters rüzgâr) zorluk d ile ölçeklenen modüllere çevirir. 72 aday üretildi; her biri uzman planlayıcıyla çözüldü ve 10 botla ölçüldü. `scripts/select_levels.py` 35'ini hedef eğriye göre seçti (%85 → %25; her dünyanın ilk bölümü kolay; par > 35 sn cezalı).
+- 12 koşuluk doğrulama: 17. bölümde %75 → 50. bölümde %8 (gürültü ±%14). Uzman 50/50 (otomatik test).
+- 16+ bölümler 5'erli 7 dünyada ve dünya adıyla gösteriliyor (Rüzgâr Vadisi… Son Nefes, 15 dil). Ana menü ızgarası 15'lik sayfalara bölündü, sıradaki bölümün sayfasında açılıyor.
+- Sınır: üretilmiş bölümlerde el yapımı bölümlerdeki "tek fikir öğret" kurgusu yok; insan testinde sıkıcı/haksız bulunanlar elle düzeltilecek.

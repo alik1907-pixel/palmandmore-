@@ -20,14 +20,16 @@ Kod, içerik, mağaza materyali ve yayın paketi hazır. Kalan işlerin hepsi ya
 ## M3 — Sanat ve ses: TAMAM (GATE 2 → Kâğıt Kesik, D13)
 - 3 tema (Kâğıt Kesik varsayılan; Neon Gece, Pastel Gün açılabilir), prosedürel arka plan shader'ı, ikon seti (512, 192, adaptif ön/arka plan).
 - 10 prosedürel balon kostümü, 4 katmanlı uyarlanabilir sentez müzik.
-- Erişilebilirlik: ses/müzik/titreşim ayrı ayrı kapatılabilir, tek elle oynanır, diken = renk + şekil (sadece renge dayanmaz). Yazı boyutu ayarı YOK (açık iş).
+- Erişilebilirlik: ses/müzik/titreşim ayrı ayrı kapatılabilir, tek elle oynanır, diken = renk + şekil (sadece renge dayanmaz). Yazı boyutu ayarı var (D21).
 
 ## M4 — Tutma ve meta: TAMAM (uzak analitik ve lig hariç)
 - **15 dil** (D20): arayüz, bölüm ve tema adları, paylaşım metinleri, mağaza metinleri; Ayarlar → Dil paneli. Ana dil kontrolü DOĞRULANMADI.
 - Ana menü (canlı maskot), bölüm ızgarası, ★ sistemi (par = uzman süresi), günlük kuyu (60 doğrulanmış bölüm), seri, kostüm/tema kilitleri, paylaşım metni (8 dil), değerlendirme isteği.
 - Olay şeması uygulandı (KPI.md), olaylar cihazda tutuluyor.
 - [ ] Haftalık lig / küresel patlama ısı haritası: backend gerekir (D17). Olaylar konumla kaydediliyor.
-- [ ] 100+ bölüm: 15 el yapımı + 60 günlük = 75. Üretici ve doğrulayıcı hazır (`tools/gen_daily.gd`); havuz bir komutla büyütülebilir.
+- [x] **50 kampanya bölümü** (15 el yapımı + 35 üretilmiş/doğrulanmış, 7 dünya) + 60 günlük kuyu = 110 oynanabilir bölüm (D23).
+- [x] **Yazı boyutu ayarı** (Normal/Büyük/Çok büyük, taşan metin otomatik küçülür) (D21).
+- [x] **Firebase Analytics** köprüsü hazır; yapımcının Firebase kimlikleriyle açılır (D22, LAUNCH §2b).
 
 ## M5 — Gelir: TAMAM (test kimlikleriyle)
 - SisPlatform Android eklentisi: UMP onayı, AdMob ödüllü + geçiş reklamı, Play Billing (3 ürün, onaylama, geri yükleme), paylaşım, uygulama içi değerlendirme.
@@ -36,7 +38,7 @@ Kod, içerik, mağaza materyali ve yayın paketi hazır. Kalan işlerin hepsi ya
 - [ ] Ek mediation ağları: AdMob paneli + adaptör bağımlılığı (sonra).
 
 ## M6 — Kalite: TAMAM (cihaz ölçümleri hariç)
-- 18 otomatik test yeşil (çeviri tamlığı + biçim dizgileri dahil): replay determinizmi, kurallar, 15 bölüm + günlük havuz örneklemi çözülebilir, profil/seri kuralları, i18n tamlığı, yapılandırma.
+- 21 otomatik test yeşil (50 bölüm uzman tarafından çözülüyor, çeviri tamlığı, Firebase kapısı, yazı sığdırma dahil): replay determinizmi, kurallar, 15 bölüm + günlük havuz örneklemi çözülebilir, profil/seri kuralları, i18n tamlığı, yapılandırma.
 - Uçtan uca arayüz öz-testi (`-- selftest`) yeşil, çıkışta sızıntı yok.
 - Android davranışları: geri tuşu, arka plana atılınca basılı tutmanın bırakılması, çoklu parmak, atomik kayıt.
 - AAB 57 MB (iki mimari; cihaz başına ~25–30 MB indirme, tahmin).
@@ -54,5 +56,5 @@ Kod, içerik, mağaza materyali ve yayın paketi hazır. Kalan işlerin hepsi ya
 
 ## Bilinen eksikler ve riskler
 - Bot ≠ insan: ilk 9 bölüm botlara göre kolay; gerçek veriyle ayarlanacak.
-- Yazı boyutu ayarı yok; hindi/japonca glifler Android sistem fontuna dayanıyor (cihazda DOĞRULANMADI).
+- Hindi/japonca/çince/tayca glifler Android sistem fontuna dayanıyor (cihazda DOĞRULANMADI).
 - Repo kökündeki boş Expo dosyaları duruyor (yapımcı karar vermedi).

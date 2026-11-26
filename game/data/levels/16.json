@@ -1,0 +1,39 @@
+{
+ "name": "",
+ "hint": "",
+ "rows": [
+  {
+   "gap": 158,
+   "space": 250,
+   "type": "gate",
+   "x": 360
+  },
+  {
+   "gap": 128,
+   "space": 400,
+   "throat": 114,
+   "type": "gate",
+   "x": 360
+  },
+  {
+   "gap": 150,
+   "space": 400,
+   "throat": 81,
+   "throat_spiked": true,
+   "type": "gate",
+   "x": 360
+  },
+  {
+   "gap": 128,
+   "space": 400,
+   "throat": 114,
+   "type": "gate",
+   "x": 360
+  }
+ ],
+ "par": 12.5,
+ "generated": true,
+ "seed": 1000001,
+ "difficulty": 0.05,
+ "bot_clear": 0.9
+}

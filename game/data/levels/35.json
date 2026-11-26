@@ -1,0 +1,99 @@
+{
+ "name": "",
+ "hint": "",
+ "rows": [
+  {
+   "gap": 140,
+   "space": 250,
+   "type": "gate",
+   "x": 360
+  },
+  {
+   "gap": 107,
+   "space": 368,
+   "type": "gate",
+   "x": 387
+  },
+  {
+   "gap": 107,
+   "space": 361,
+   "type": "gate",
+   "x": 401
+  },
+  {
+   "gap": 107,
+   "space": 342,
+   "type": "gate",
+   "x": 420
+  },
+  {
+   "gap": 160,
+   "space": 400,
+   "type": "gate",
+   "x": 360
+  },
+  {
+   "dir": -1,
+   "space": 320,
+   "strength": 274,
+   "type": "wind"
+  },
+  {
+   "space": 0,
+   "type": "bar",
+   "x0": 288,
+   "x1": 680
+  },
+  {
+   "gap": 147,
+   "space": 170,
+   "spiked": true,
+   "type": "gate",
+   "x": 130
+  },
+  {
+   "dir": 1.0,
+   "space": 300,
+   "strength": 280,
+   "type": "wind"
+  },
+  {
+   "gap": 134,
+   "space": 150,
+   "type": "gate",
+   "x": 360
+  },
+  {
+   "dir": 1.0,
+   "space": 260,
+   "strength": 300,
+   "type": "wind"
+  },
+  {
+   "dir": -1.0,
+   "space": 260,
+   "strength": 300,
+   "type": "wind"
+  },
+  {
+   "gap": 125,
+   "space": 150,
+   "spiked": true,
+   "type": "gate",
+   "x": 226
+  },
+  {
+   "gap": 150,
+   "space": 400,
+   "throat": 99,
+   "throat_spiked": true,
+   "type": "gate",
+   "x": 226
+  }
+ ],
+ "par": 27.5,
+ "generated": true,
+ "seed": 3000006,
+ "difficulty": 0.64,
+ "bot_clear": 0.5
+}

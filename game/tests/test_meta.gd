@@ -71,7 +71,11 @@ func test_i18n_complete() -> void:
 				assert_eq(txt.count("%d"), String(row.en).count("%d"), "%s/%s %%d count" % [key, lang])
 				assert_eq(txt.count("%s"), String(row.en).count("%s"), "%s/%s %%s count" % [key, lang])
 	for n in range(1, LevelBuilder.level_count() + 1):
-		assert_true(d.strings.has("level_%d" % n), "level %d name" % n)
+		if n < I18n.FIRST_WORLD_LEVEL:
+			assert_true(d.strings.has("level_%d" % n), "level %d name" % n)
+		else:
+			var w := (n - I18n.FIRST_WORLD_LEVEL) / I18n.WORLD_SIZE + 1
+			assert_true(d.strings.has("world_%d" % w), "world %d name (level %d)" % [w, n])
 	for st in ArtStyle.IDS:
 		assert_true(d.strings.has("theme_" + st), "theme name " + st)
 
