@@ -30,9 +30,18 @@ class SisPlatformExport extends EditorExportPlugin:
 	func _get_android_libraries(platform: EditorExportPlatform, debug: bool) -> PackedStringArray:
 		return PackedStringArray(["sis_platform/bin/SisPlatform-release.aar"])
 
+	const FIREBASE_DEPS := ["com.google.firebase:firebase-analytics:24.0.0"]
+
 	func _get_android_dependencies(platform: EditorExportPlatform, debug: bool) -> PackedStringArray:
-		return PackedStringArray(DEPS)
+		var deps := PackedStringArray(DEPS)
+		if PlatformConfig.load_config().firebase_enabled():
+			deps.append_array(FIREBASE_DEPS)      # only packaged when configured
+		return deps
 
 	func _get_android_manifest_application_element_contents(platform: EditorExportPlatform, debug: bool) -> String:
 		var cfg := PlatformConfig.load_config()
-		return '<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="%s"/>\n' % cfg.admob_app_id
+		var xml := '<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="%s"/>\n' % cfg.admob_app_id
+		if cfg.firebase_enabled():
+			# nothing is collected until the consent flow finishes (Platform.gd enables it)
+			xml += '<meta-data android:name="firebase_analytics_collection_enabled" android:value="false"/>\n'
+		return xml

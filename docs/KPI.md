@@ -19,10 +19,10 @@
 | 2026-11-26 | Planlayıcı bot | Bölüm süresi (kazananlar) | 9,7–26,4 sn | Hedef 15–40 sn; ilk bölümler kısa |
 
 ## Analitik olay şeması (uygulandı: `game/src/services/analytics.gd`)
-Olaylar cihazda `user://events.jsonl` dosyasına (son 3000 satır) yazılır ve yerel eklentiye (`SisPlatform.logEvent` → Logcat) iletilir. Sunucuya gönderim yok. Firebase gibi bir arka uç eklenecekse tek bağlantı noktası burası; gizlilik politikası ve Veri Güvenliği formu da o zaman güncellenmeli.
+Olaylar cihazda `user://events.jsonl` dosyasına (son 3000 satır) yazılır ve eklentiye (`SisPlatform.logEvent`) iletilir. `platform.json` içinde Firebase kimlikleri doluysa olaylar **Google Analytics for Firebase**'e gider (onaydan sonra); boşsa sadece Logcat'e yazılır. Gizlilik politikası ve Veri Güvenliği eki hazır (LAUNCH §2b).
 | Olay | Parametreler | Ne ölçer |
 |---|---|---|
-| session_start | sessions, day (kurulumdan beri gün) | D1/D7/D30, oturum sayısı |
+| app_session | sessions, day (kurulumdan beri gün) | D1/D7/D30, oturum sayısı (`session_start` Firebase'de ayrılmış ad) |
 | consent | can_request_ads | Onay oranı (AB) |
 | screen_home | stars | Menü dönüşleri |
 | level_start | mode, level, attempt | Deneme sayısı, huni |
@@ -35,5 +35,6 @@ Olaylar cihazda `user://events.jsonl` dosyasına (son 3000 satır) yazılır ve 
 | share | – | Viral katsayı girdisi |
 | skin_equip / theme_equip | skin / theme | Kozmetik ilgisi |
 | language | lang, auto | Dil tercihleri (yerelleştirme önceliği) |
+| text_size | scale | Erişilebilirlik ayarı kullanımı |
 
-**Kapalı testte veri toplama:** Test kullanıcısından `adb pull /sdcard/Android/data/com.palmandmore.sis/files/...` istemek pratik değil. Kapalı test KPI'ları Play Console istatistiklerinden (yükleme, kaldırma, ANR, çökme) + geri bildirim formundan alınır. Yumuşak lansman için uzak analitik gerekir. **Karar noktası (yapımcı):** Firebase Analytics eklenmesi; ek SDK, Veri Güvenliği güncellemesi gerektirir.
+**Kapalı testte veri toplama:** Test kullanıcısından `adb pull /sdcard/Android/data/com.palmandmore.sis/files/...` istemek pratik değil. Kapalı test KPI'ları Play Console istatistiklerinden (yükleme, kaldırma, ANR, çökme) + geri bildirim formundan alınır. Yumuşak lansman için uzak analitik gerekir. Firebase entegrasyonu hazır; açmak için yapımcının Firebase projesinden 4 kimlik gerekiyor (LAUNCH §2b).

@@ -28,7 +28,7 @@ func _defaults() -> Dictionary:
 		"last_daily": -1,       # day index of the last completed daily
 		"daily_best": {},       # "day" -> seconds
 		"ads_removed": false,
-		"settings": {"sound": true, "music": true, "haptics": true, "lang": ""},
+		"settings": {"sound": true, "music": true, "haptics": true, "lang": "", "text_scale": 0},
 		"first_day": -1,
 		"sessions": 0,
 		"levels_since_interstitial": 0,

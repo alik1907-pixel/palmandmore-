@@ -83,3 +83,13 @@
 - Ayarlar → Dil paneli: ana dildeki adlar + "sistem dili" seçeneği.
 - Arapça eklenmedi: sağdan sola düzen için arayüz aynalama gerekiyor (ayrı iş). Çince geleneksel (zh_TW/HK) basitleştirilmiş görür.
 - Çeviriler makine kalitesinde değil ama ana dili konuşan biri tarafından gözden geçirilmedi: DOĞRULANMADI. Kapalı testte ilgili ülkelerden testçilerle kontrol edilmeli.
+
+## D21 — Yazı boyutu ayarı · 2026-11-26
+- Normal / Büyük (×1,15) / Çok büyük (×1,3). Bütün metin çağrıları ölçekleniyor; kutusuna sığmayan metin otomatik küçülüyor (`UI.fit`). Ayarlar paneli 9 satıra kadar sığacak şekilde sıkıştırıldı.
+
+## D22 — Firebase Analytics, yapılandırmaya bağlı · 2026-11-26
+- Eklenti, `google-services.json` ve Gradle eklentisi olmadan, kimliklerle manuel başlatıyor (`initFirebase`). Kimlikler boşsa SDK pakete girmiyor.
+- Gizlilik: manifest'te `firebase_analytics_collection_enabled=false`; UMP onayı tamamlanınca `can_request_ads` true ise açılıyor. Reklam kişiselleştirmesi için kullanılmıyor.
+- Crashlytics eklenmedi (Gradle eklentisi + mapping gerekir); çökme/ANR için Play Console Android Vitals kullanılacak.
+- `session_start` Firebase'de ayrılmış ad → `app_session`. Test: ayrılmış adlar kullanılmıyor.
+- Doğrulama: sahte kimliklerle derleme → manifest bayrağı ve Firebase sınıfları pakette. Gerçek veri akışı DOĞRULANMADI (gerçek proje + telefon gerekiyor).

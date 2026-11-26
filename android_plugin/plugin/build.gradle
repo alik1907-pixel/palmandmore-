@@ -9,6 +9,7 @@ ext {
     umpVersion = '4.0.0'
     billingVersion = '9.1.0'
     reviewVersion = '2.0.2'
+    firebaseAnalyticsVersion = '24.0.0'
 }
 android {
     namespace 'com.palmandmore.sisplatform'
@@ -31,4 +32,5 @@ dependencies {
     compileOnly "com.google.android.ump:user-messaging-platform:$umpVersion"
     compileOnly "com.android.billingclient:billing:$billingVersion"
     compileOnly "com.google.android.play:review:$reviewVersion"
+    compileOnly "com.google.firebase:firebase-analytics:$firebaseAnalyticsVersion"
 }

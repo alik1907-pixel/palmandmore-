@@ -28,6 +28,15 @@ Bu bulut oturumu Play Console'a, AdMob'a veya senin hesaplarına giriş yapamaz.
 - `privacy_url`, `store_url` → gerçek adresler
 Sonra: `scripts/build_release.sh`. **Test kimlikleriyle canlıya çıkma; kendi reklamına asla tıklama.**
 
+## 2b. Firebase Analytics (uzaktan oyuncu verisi; D1/D7 ölçmek için gerekli)
+1. https://console.firebase.google.com → Proje oluştur ("sis"). Google Analytics'i aç.
+2. Projeye Android uygulaması ekle, paket adı `com.palmandmore.sis`. `google-services.json` dosyasını indirmene gerek yok.
+3. Proje ayarları → Genel → "Uygulamalarınız" kısmından 4 değeri al: **Uygulama kimliği** (`1:…:android:…`), **Web API anahtarı**, **Proje kimliği**, **Proje numarası**.
+4. Bunları `game/data/platform.json` → `firebase` bloğuna yaz (ya da bana gönder). Bu alanlar boş kaldığı sürece Firebase SDK pakete hiç girmez.
+5. Yeniden derle. Veri toplama, onay formu bittikten sonra başlar (manifest'te varsayılan kapalı).
+6. Firebase → Analytics → Olaylar: `level_complete`, `level_fail` (x, y, cause), `app_session` vb. 24 saat içinde görünür. D1/D7 tutma: Analytics → Retention.
+- **Veri Güvenliği eki (Firebase açıksa):** *Uygulama etkinliği → Uygulama etkileşimleri* ve *Cihaz veya diğer kimlikler* (uygulama örneği kimliği) toplanıyor. Amaç: Analiz. Paylaşım: yok (Google hizmet sağlayıcı). Gizlilik politikasında Firebase bölümü hazır.
+
 ## 3. Play Console: uygulama oluşturma
 - Uygulama adı: "ŞİŞ: Balon Sıkıştırma", varsayılan dil Türkçe, Oyun, Ücretsiz.
 - **Uygulama içi ürünler** (Ürünler → Uygulama içi ürünler), kimlikler birebir:

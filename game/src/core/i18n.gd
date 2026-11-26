@@ -46,8 +46,17 @@ static func t(key: String) -> String:
 	var row: Dictionary = _strings.get(key, {})
 	return String(row.get(lang, row.get(FALLBACK, key)))
 
+## Hand-made levels have their own names; levels 16+ are named after their
+## world (5 levels per world): "Wind Valley", "Thorn Garden", ...
+const FIRST_WORLD_LEVEL := 16
+const WORLD_SIZE := 5
+
 static func level_name(n: int) -> String:
-	return t("level_%d" % n)
+	_ensure()
+	if _strings.has("level_%d" % n):
+		return t("level_%d" % n)
+	var w := (n - FIRST_WORLD_LEVEL) / WORLD_SIZE + 1
+	return t("world_%d" % w) if _strings.has("world_%d" % w) else ""
 
 static func lang_name(code: String) -> String:
 	_ensure()

@@ -4,7 +4,18 @@
  "rewarded_unit": "ca-app-pub-3940256099942544/5224354917",
  "interstitial_unit": "ca-app-pub-3940256099942544/1033173712",
  "test_ads": true,
- "products": ["remove_ads", "theme_pack", "cosmetic_pack"],
+ "products": [
+  "remove_ads",
+  "theme_pack",
+  "cosmetic_pack"
+ ],
  "store_url": "https://play.google.com/store/apps/details?id=com.palmandmore.sis",
- "privacy_url": "https://alik1907-pixel.github.io/palmandmore-/privacy.html"
+ "privacy_url": "https://alik1907-pixel.github.io/palmandmore-/privacy.html",
+ "_comment_firebase": "Firebase Analytics: leave empty to ship WITHOUT Firebase (SDK not packaged). Fill from Firebase console > Project settings > Your apps (Android): App ID, Web API key, Project ID, Project number.",
+ "firebase": {
+  "app_id": "",
+  "api_key": "",
+  "project_id": "",
+  "sender_id": ""
+ }
 }

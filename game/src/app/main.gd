@@ -19,6 +19,7 @@ func _ready() -> void:
 	if cli.has("demo"):
 		_demo_profile()
 	I18n.detect(String(cli.get("lang", Profile.data.settings.get("lang", ""))))
+	apply_text_scale()
 	var layer := CanvasLayer.new()
 	layer.layer = -1
 	add_child(layer)
@@ -80,10 +81,19 @@ func _parse_cli() -> void:
 				cli.demo = true
 			"selftest":
 				cli.selftest = true
+			"textscale":
+				cli.textscale = a[i + 1]
+				i += 1
 			"lang":
 				cli.lang = a[i + 1]
 				i += 1
 		i += 1
+
+func apply_text_scale() -> void:
+	var idx := clampi(int(Profile.data.settings.get("text_scale", 0)), 0, UI.SCALES.size() - 1)
+	if cli.has("textscale"):
+		idx = clampi(int(cli.textscale), 0, UI.SCALES.size() - 1)
+	UI.scale = UI.SCALES[idx]
 
 func apply_style() -> void:
 	style = ArtStyle.make(String(cli.get("style", Profile.data.style)))
@@ -106,6 +116,7 @@ func open_home(panel := "") -> void:
 	_swap(h)
 
 func open_level(n: int, auto := {}) -> void:
+	n = clampi(n, 1, LevelBuilder.level_count())     # never open a missing level
 	var g = GameScreenScript.new()
 	g.main = self
 	g.mode = "level"
@@ -175,14 +186,14 @@ func _selftest() -> void:
 		notification(NOTIFICATION_WM_GO_BACK_REQUEST)   # back closes the panel
 		await get_tree().create_timer(0.2).timeout
 	await _tap(W_SET)                              # settings → language panel
-	await _tap(Vector2(360, 664))
+	await _tap(Vector2(360, 604))
 	steps.append("lang_panel:%s" % (screen.get("open_panel") == "lang"))
 	await _tap(Vector2(207, 415))                  # English
 	steps.append("lang_en:%s" % (I18n.lang == "en"))
-	await _tap(Vector2(360, 664))
+	await _tap(Vector2(360, 604))
 	await _tap(Vector2(207, 721))                  # 日本語
 	steps.append("lang_ja:%s" % (I18n.lang == "ja"))
-	await _tap(Vector2(360, 664))
+	await _tap(Vector2(360, 604))
 	await _tap(Vector2(207, 313))                  # follow system
 	steps.append("lang_auto:%s" % (String(Profile.data.settings.lang) == ""))
 	notification(NOTIFICATION_WM_GO_BACK_REQUEST)

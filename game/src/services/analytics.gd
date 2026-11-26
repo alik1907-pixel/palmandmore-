@@ -11,7 +11,7 @@ var _buffer: Array[String] = []
 
 func _ready() -> void:
 	_session = "%d-%d" % [Time.get_unix_time_from_system(), randi() % 100000]
-	log_event("session_start", {"sessions": Profile.data.sessions, "day": Profile.today() - int(Profile.data.first_day)})
+	log_event("app_session", {"sessions": Profile.data.sessions, "day": Profile.today() - int(Profile.data.first_day)})
 
 func log_event(name: String, params := {}) -> void:
 	var e := {"t": Time.get_unix_time_from_system(), "s": _session, "e": name}
@@ -20,7 +20,7 @@ func log_event(name: String, params := {}) -> void:
 	_buffer.append(line)
 	if Engine.has_singleton("SisPlatform"):
 		Engine.get_singleton("SisPlatform").logEvent(name, JSON.stringify(params))
-	if _buffer.size() >= 10 or name in ["level_complete", "level_fail", "purchase", "session_start"]:
+	if _buffer.size() >= 10 or name in ["level_complete", "level_fail", "purchase", "app_session"]:
 		flush()
 
 func flush() -> void:

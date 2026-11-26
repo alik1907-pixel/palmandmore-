@@ -1,6 +1,11 @@
 package com.palmandmore.sisplatform
 
 import android.content.Intent
+import android.os.Bundle
+import org.json.JSONObject
+import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions
+import com.google.firebase.analytics.FirebaseAnalytics
 import android.util.Log
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
@@ -52,6 +57,8 @@ class SisPlatform(godot: Godot) : GodotPlugin(godot) {
     private var billing: BillingClient? = null
     private val productDetails = HashMap<String, ProductDetails>()
     private var productIds: List<String> = emptyList()
+
+    private var analytics: FirebaseAnalytics? = null
 
     override fun getPluginName() = "SisPlatform"
 
@@ -326,8 +333,68 @@ class SisPlatform(godot: Godot) : GodotPlugin(godot) {
         }
     }
 
+    // ------------------------------------------------------------------ analytics
+    /**
+     * Initializes Firebase from explicit ids (no google-services.json / Gradle plugin needed).
+     * Collection starts DISABLED; call setAnalyticsEnabled(true) after the consent flow.
+     */
+    @UsedByGodot
+    fun initFirebase(appId: String, apiKey: String, projectId: String, senderId: String): Boolean {
+        val a = activity ?: return false
+        if (appId.isEmpty() || apiKey.isEmpty() || projectId.isEmpty()) return false
+        return try {
+            val app = FirebaseApp.getApps(a).firstOrNull() ?: FirebaseApp.initializeApp(
+                a.applicationContext,
+                FirebaseOptions.Builder()
+                    .setApplicationId(appId)
+                    .setApiKey(apiKey)
+                    .setProjectId(projectId)
+                    .setGcmSenderId(senderId)
+                    .build()
+            )
+            if (app == null) return false
+            analytics = FirebaseAnalytics.getInstance(a.applicationContext).also {
+                it.setAnalyticsCollectionEnabled(false)
+            }
+            true
+        } catch (e: Throwable) {
+            Log.e(tag, "firebase init failed", e)
+            false
+        }
+    }
+
+    @UsedByGodot
+    fun setAnalyticsEnabled(enabled: Boolean) {
+        analytics?.setAnalyticsCollectionEnabled(enabled)
+    }
+
+    /** Godot sends params as a JSON object; numbers become doubles/longs, the rest strings. */
     @UsedByGodot
     fun logEvent(name: String, json: String) {
-        Log.i(tag, "event $name $json")
+        val fa = analytics
+        if (fa == null) {
+            Log.i(tag, "event $name $json")
+            return
+        }
+        try {
+            val b = Bundle()
+            val o = JSONObject(if (json.isEmpty()) "{}" else json)
+            val keys = o.keys()
+            var n = 0
+            while (keys.hasNext() && n < 25) {
+                val k = keys.next()
+                when (val v = o.get(k)) {
+                    is Int -> b.putLong(k, v.toLong())
+                    is Long -> b.putLong(k, v)
+                    is Double -> b.putDouble(k, v)
+                    is Boolean -> b.putLong(k, if (v) 1L else 0L)
+                    else -> b.putString(k, v.toString().take(100))
+                }
+                n++
+            }
+            fa.logEvent(name.take(40), b)
+        } catch (e: Throwable) {
+            Log.w(tag, "logEvent failed: ${e.message}")
+        }
     }
 }

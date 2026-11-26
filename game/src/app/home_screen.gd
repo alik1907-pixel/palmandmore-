@@ -15,12 +15,18 @@ var t := 0.0
 var sfx: Sfx
 var toast := ""
 var toast_t := 0.0
+var grid_page := -1
+const PAGE_SIZE := 15
+const SET_STEP := 92.0      # settings rows (up to 9 rows must fit the panel)
+const SET_H := 76.0
 
 func _ready() -> void:
 	sfx = Sfx.new()
 	add_child(sfx)
 	sfx.muted = not Profile.setting("sound")
 	mascot = BalloonSim.new(_mascot_box())
+	# open the grid on the page that holds the next level to play
+	grid_page = (clampi(int(Profile.data.unlocked), 1, LevelBuilder.level_count()) - 1) / PAGE_SIZE
 	Platform.rewarded_done.connect(_on_rewarded)
 	Platform.purchase_done.connect(_on_purchase)
 	Platform.prices_ready.connect(queue_redraw)
@@ -105,6 +111,8 @@ func _on_button(id: String) -> void:
 			if Daily.pool_size() > 0:
 				main.open_daily()
 		"skins", "themes", "settings": open_panel = id
+		"page_prev": grid_page -= 1
+		"page_next": grid_page += 1
 		"close": open_panel = ""
 		"remove_ads", "theme_pack", "cosmetic_pack": Platform.buy(id)
 		"restore": Platform.restore()
@@ -117,6 +125,12 @@ func _on_button(id: String) -> void:
 			Profile.toggle_setting("music")
 			Music.enabled = Profile.setting("music")
 		"haptics": Profile.toggle_setting("haptics")
+		"text_size":
+			var idx := (int(Profile.data.settings.get("text_scale", 0)) + 1) % UI.SCALES.size()
+			Profile.data.settings.text_scale = idx
+			Profile.save()
+			main.apply_text_scale()
+			Analytics.log_event("text_size", {"scale": UI.SCALES[idx]})
 		"lang": open_panel = "lang"
 
 func _on_rewarded(placement: String, ok: bool) -> void:
@@ -153,26 +167,35 @@ func _draw() -> void:
 	_btn("daily", dr, "", false)
 	UI.icon(self, "calendar", Vector2(120, 580), 26.0, Color.WHITE)
 	var done := int(Profile.data.last_daily) == Profile.today()
-	UI.text_left(self, "%s #%d" % [I18n.t("daily"), Daily.number_for(Profile.today())], Vector2(170, 572), 32, Color.WHITE)
-	UI.text_left(self, I18n.t("daily_done") if done else "", Vector2(170, 614), 24, Color(1, 1, 1, 0.85))
+	UI.text_left(self, "%s #%d" % [I18n.t("daily"), Daily.number_for(Profile.today())], Vector2(170, 572), 32, Color.WHITE, W - 170.0 - 190.0)
+	UI.text_left(self, I18n.t("daily_done") if done else "", Vector2(170, 614), 24, Color(1, 1, 1, 0.85), W - 170.0 - 190.0)
 	UI.icon(self, "flame", Vector2(W - 150, 578), 26.0, Color.WHITE)
 	UI.text_left(self, str(Profile.streak_alive()), Vector2(W - 118, 592), 36, Color.WHITE)
-	# level grid 5x3
+	# level grid: pages of 15 (5x3), page arrows at the sides
 	var n := LevelBuilder.level_count()
-	for i in n:
-		var col := i % 5
-		var row := i / 5
-		var r := Rect2(54 + col * 126, 672 + row * 122, 108, 108)
+	var pages := maxi(ceili(n / float(PAGE_SIZE)), 1)
+	grid_page = clampi(grid_page, 0, pages - 1)
+	var first := grid_page * PAGE_SIZE
+	for i in range(first, mini(first + PAGE_SIZE, n)):
+		var k := i - first
+		var r := Rect2(54 + (k % 5) * 126, 672 + (k / 5) * 122, 108, 108)
 		var lvl := i + 1
 		var open := lvl <= int(Profile.data.unlocked)
 		UI.panel(self, r, st, 0.9 if open else 0.45)
 		if open:
 			buttons.append({"id": "level:%d" % lvl, "rect": r})
 			UI.text_center(self, str(lvl), r.get_center() + Vector2(0, 4), 40, ink)
-			for k in 3:
-				UI.star(self, r.position + Vector2(28 + k * 26, 86), 10.0, k < Profile.stars_of(lvl))
+			for s_i in 3:
+				UI.star(self, r.position + Vector2(28 + s_i * 26, 86), 10.0, s_i < Profile.stars_of(lvl))
 		else:
 			UI.icon(self, "lock", r.get_center(), 22.0, Color(ink, 0.5))
+	if pages > 1:
+		if grid_page > 0:
+			_arrow("page_prev", Rect2(4, 790, 46, 110), -1.0, ink)
+		if grid_page < pages - 1:
+			_arrow("page_next", Rect2(W - 50, 790, 46, 110), 1.0, ink)
+		for p_i in pages:
+			draw_circle(Vector2(W * 0.5 + (p_i - (pages - 1) * 0.5) * 22.0, 1030), 5.0, Color(ink, 0.85 if p_i == grid_page else 0.25))
 	# play
 	_btn("play", Rect2(140, 1050, W - 280, 104), I18n.t("play"), true)
 	# bottom row
@@ -196,6 +219,11 @@ func _draw() -> void:
 		var a := clampf(toast_t, 0.0, 1.0)
 		UI._round_rect(self, Rect2(160, 110, 400, 70), 30.0, Color(0, 0, 0, 0.7 * a))
 		UI.text_center(self, toast, Vector2(360, 156), 34, Color(1, 1, 1, a))
+
+func _arrow(id: String, r: Rect2, dir: float, col: Color) -> void:
+	var c := r.get_center()
+	draw_colored_polygon(PackedVector2Array([c + Vector2(-10 * dir, -22), c + Vector2(12 * dir, 0), c + Vector2(-10 * dir, 22)]), Color(col, 0.75))
+	buttons.append({"id": id, "rect": r})
 
 func _btn(id: String, r: Rect2, label: String, primary: bool, enabled := true) -> void:
 	UI.button(self, r, label, _style(), primary, enabled, pressed_id == id)
@@ -309,20 +337,23 @@ func _draw_settings(st: ArtStyle) -> void:
 	var r := _panel_frame(st, I18n.t("settings"))
 	var y := r.position.y + 140
 	for k in ["sound", "music", "haptics"]:
-		_btn(k, Rect2(r.position.x + 60, y, r.size.x - 120, 88), "%s: %s" % [I18n.t(k), "✓" if Profile.setting(k) else "—"], false)
-		y += 110
-	_btn("lang", Rect2(r.position.x + 60, y, r.size.x - 120, 88), "%s: %s" % [I18n.t("language"), I18n.lang_name(I18n.lang)], false)
-	y += 110
+		_btn(k, Rect2(r.position.x + 60, y, r.size.x - 120, SET_H), "%s: %s" % [I18n.t(k), "✓" if Profile.setting(k) else "—"], false)
+		y += SET_STEP
+	_btn("lang", Rect2(r.position.x + 60, y, r.size.x - 120, SET_H), "%s: %s" % [I18n.t("language"), I18n.lang_name(I18n.lang)], false)
+	y += SET_STEP
+	var ts := clampi(int(Profile.data.settings.get("text_scale", 0)), 0, UI.SCALES.size() - 1)
+	_btn("text_size", Rect2(r.position.x + 60, y, r.size.x - 120, SET_H), "%s: %s" % [I18n.t("text_size"), I18n.t(UI.SCALE_KEYS[ts])], false)
+	y += SET_STEP
 	if not Profile.data.ads_removed:
 		var price := Platform.price_of("remove_ads")
-		_btn("remove_ads", Rect2(r.position.x + 60, y, r.size.x - 120, 88), I18n.t("remove_ads") + ("  " + price if price != "" else ""), true)
-		y += 110
-	_btn("restore", Rect2(r.position.x + 60, y, r.size.x - 120, 88), I18n.t("restore"), false)
-	y += 110
+		_btn("remove_ads", Rect2(r.position.x + 60, y, r.size.x - 120, SET_H), I18n.t("remove_ads") + ("  " + price if price != "" else ""), true)
+		y += SET_STEP
+	_btn("restore", Rect2(r.position.x + 60, y, r.size.x - 120, SET_H), I18n.t("restore"), false)
+	y += SET_STEP
 	if Platform.privacy_options_available():
-		_btn("privacy", Rect2(r.position.x + 60, y, r.size.x - 120, 88), I18n.t("privacy"), false)
-		y += 110
-	_btn("policy", Rect2(r.position.x + 60, y, r.size.x - 120, 88), I18n.t("privacy_policy"), false)
+		_btn("privacy", Rect2(r.position.x + 60, y, r.size.x - 120, SET_H), I18n.t("privacy"), false)
+		y += SET_STEP
+	_btn("policy", Rect2(r.position.x + 60, y, r.size.x - 120, SET_H), I18n.t("privacy_policy"), false)
 
 func _draw_languages(st: ArtStyle) -> void:
 	var r := _panel_frame(st, I18n.t("language"))

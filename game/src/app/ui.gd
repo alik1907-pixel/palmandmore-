@@ -4,6 +4,21 @@ extends RefCounted
 ## Screens collect buttons during _draw and resolve taps against them.
 
 static var font: Font = null
+## Player text-size preference (Settings): 1.0 / 1.15 / 1.3. Applied to every
+## text call; texts that would overflow their box are shrunk to fit.
+static var scale := 1.0
+const SCALES := [1.0, 1.15, 1.3]
+const SCALE_KEYS := ["size_normal", "size_large", "size_xlarge"]
+
+static func scaled(size: int) -> int:
+	return int(round(size * scale))
+
+## Largest size <= wanted that fits max_w (never below 12 px).
+static func fit(s: String, size: int, max_w: float) -> int:
+	var sz := size
+	while sz > 12 and f().get_string_size(s, HORIZONTAL_ALIGNMENT_LEFT, -1, sz).x > max_w:
+		sz -= 2
+	return sz
 
 static func f() -> Font:
 	if font == null:
@@ -25,14 +40,16 @@ static func button(ci: CanvasItem, r: Rect2, label: String, st: ArtStyle, primar
 	_round_rect(ci, Rect2(r.position + Vector2(0, 7), r.size), 24.0, base.darkened(0.35))
 	_round_rect(ci, Rect2(r.position + off, r.size), 24.0, base)
 	if label != "":
-		var size := 40 if primary else 30
-		text_center(ci, label, r.get_center() + off + Vector2(0, size * 0.35), size, Color.WHITE)
+		var size := fit(label, scaled(40 if primary else 30), r.size.x - 28.0)
+		ci.draw_string(f(), Vector2(r.position.x, r.get_center().y + off.y + size * 0.35), label, HORIZONTAL_ALIGNMENT_CENTER, r.size.x, size, Color.WHITE)
 
-static func text_center(ci: CanvasItem, s: String, at: Vector2, size: int, col: Color) -> void:
-	ci.draw_string(f(), Vector2(at.x - 1000, at.y), s, HORIZONTAL_ALIGNMENT_CENTER, 2000, size, col)
+static func text_center(ci: CanvasItem, s: String, at: Vector2, size: int, col: Color, max_w := 680.0) -> void:
+	var sz := fit(s, scaled(size), max_w)
+	ci.draw_string(f(), Vector2(at.x - 1000, at.y), s, HORIZONTAL_ALIGNMENT_CENTER, 2000, sz, col)
 
-static func text_left(ci: CanvasItem, s: String, at: Vector2, size: int, col: Color) -> void:
-	ci.draw_string(f(), at, s, HORIZONTAL_ALIGNMENT_LEFT, -1, size, col)
+static func text_left(ci: CanvasItem, s: String, at: Vector2, size: int, col: Color, max_w := -1.0) -> void:
+	var limit := max_w if max_w > 0.0 else 700.0 - at.x
+	ci.draw_string(f(), at, s, HORIZONTAL_ALIGNMENT_LEFT, -1, fit(s, scaled(size), limit), col)
 
 static func _round_rect(ci: CanvasItem, r: Rect2, rad: float, col: Color) -> void:
 	## Single polygon (no overlapping pieces → correct with translucent colors).
@@ -46,7 +63,7 @@ static func _round_rect(ci: CanvasItem, r: Rect2, rad: float, col: Color) -> voi
 	ci.draw_colored_polygon(pts, col)
 
 static func text_wrap(ci: CanvasItem, s: String, at: Vector2, width: float, size: int, col: Color) -> void:
-	ci.draw_multiline_string(f(), at, s, HORIZONTAL_ALIGNMENT_LEFT, width, size, 2, col)
+	ci.draw_multiline_string(f(), at, s, HORIZONTAL_ALIGNMENT_LEFT, width, scaled(size), 2, col)
 
 static func star(ci: CanvasItem, c: Vector2, r: float, filled: bool, col := Color("ffc93c")) -> void:
 	var p := PackedVector2Array()

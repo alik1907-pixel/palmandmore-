@@ -16,6 +16,7 @@ var cfg: PlatformConfig
 var native: Object = null
 var ads_allowed := false
 var prices := {}
+var analytics_ready := false      # Firebase initialized (collection still gated by consent)
 var _pending_placement := ""
 var _earned := false
 var _last_interstitial := 0.0
@@ -32,6 +33,9 @@ func _ready() -> void:
 		native.connect("billing_ready", _on_billing_ready)
 		native.connect("purchase_result", _on_purchase_result)
 		native.connect("owned_products", _on_owned)
+		if cfg.firebase_enabled():
+			var fb := cfg.firebase
+			analytics_ready = native.initFirebase(fb.app_id, fb.api_key, fb.project_id, fb.sender_id)
 		native.requestConsent()
 		native.billingConnect(",".join(cfg.products))
 
@@ -43,6 +47,8 @@ func _on_consent(can_request: bool) -> void:
 	ads_allowed = can_request
 	Profile.data.consent_done = true
 	Profile.save()
+	if analytics_ready:
+		native.setAnalyticsEnabled(can_request)
 	Analytics.log_event("consent", {"can_request_ads": can_request})
 	if can_request:
 		native.initAds(cfg.rewarded_unit, cfg.interstitial_unit)

@@ -97,3 +97,27 @@ func test_platform_config() -> void:
 	var c := PlatformConfig.load_config()
 	assert_true(c.admob_app_id.begins_with("ca-app-pub-"))
 	assert_true(c.products.has("remove_ads"))
+	assert_true(c.firebase.has("app_id") and c.firebase.has("sender_id"), "firebase block present")
+
+func test_firebase_gating() -> void:
+	var c := PlatformConfig.new()
+	assert_true(not c.firebase_enabled(), "empty config → Firebase not packaged")
+	c.firebase = {"app_id": "1:1:android:1", "api_key": "k", "project_id": "p", "sender_id": "1"}
+	assert_true(c.firebase_enabled())
+	c.firebase.api_key = ""
+	assert_true(not c.firebase_enabled(), "partial config stays disabled")
+
+func test_text_scale_fit() -> void:
+	var long := "Политика конфиденциальности и ещё очень длинный текст"
+	for sc in UI.SCALES:
+		UI.scale = sc
+		var size := UI.fit(long, UI.scaled(30), 480.0)
+		assert_true(UI.f().get_string_size(long, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x <= 480.0 or size <= 12, "fits at %.2f" % sc)
+	UI.scale = 1.3
+	assert_eq(UI.scaled(30), 39)
+	UI.scale = 1.0
+
+func test_reserved_firebase_event_names_unused() -> void:
+	var src := FileAccess.get_file_as_string("res://src/services/analytics.gd") + FileAccess.get_file_as_string("res://src/game/game_screen.gd") + FileAccess.get_file_as_string("res://src/app/home_screen.gd") + FileAccess.get_file_as_string("res://src/services/platform.gd")
+	for reserved in ["\"session_start\"", "\"first_open\"", "\"screen_view\"", "\"app_update\"", "\"user_engagement\"", "\"error\""]:
+		assert_true(not src.contains("log_event(" + reserved), "reserved Firebase event " + reserved)
