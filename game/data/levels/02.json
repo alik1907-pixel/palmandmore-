@@ -4,28 +4,29 @@
  "rows": [
   {
    "type": "gate",
-   "x": 360,
-   "gap": 240,
-   "space": 250
+   "x": 360.0,
+   "gap": 240.0,
+   "space": 250.0
   },
   {
    "type": "gate",
-   "x": 360,
-   "gap": 120,
-   "space": 420
+   "x": 360.0,
+   "gap": 120.0,
+   "space": 420.0
   },
   {
    "type": "gate",
-   "x": 360,
-   "gap": 110,
-   "space": 420
+   "x": 360.0,
+   "gap": 110.0,
+   "space": 420.0
   },
   {
    "type": "gate",
-   "x": 360,
-   "gap": 110,
-   "space": 420
+   "x": 360.0,
+   "gap": 110.0,
+   "space": 420.0
   }
  ],
- "overpop": false
+ "overpop": false,
+ "par": 11.3
 }

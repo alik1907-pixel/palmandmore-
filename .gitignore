@@ -12,3 +12,8 @@ keystore.properties
 local.properties
 .env
 secrets/
+# Regenerable Android build trees
+game/android/
+android_plugin/.gradle/
+android_plugin/build/
+android_plugin/plugin/build/

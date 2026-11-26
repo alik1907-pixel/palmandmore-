@@ -46,3 +46,33 @@
 - Kaygan kapı ağızları (lip_slip): balon sivri köşede dengede kalıp takılıyordu.
 - Dikenli boğaz: 40 px dikensiz yaka, genişlik 150 (tanıtımda 160), uzunluk ≤ 120.
 - "Takıldın" gerçek oyunda başarısızlık değil; sadece doğrulayıcı 15 sn limit kullanır.
+
+## D12 — Yapımcı "her şeye onay" verdi · 2026-11-26
+- Android SDK lisansları kabul edildi; M3–M8'deki GATE'ler (stil seçimi dahil) Claude tarafından karara bağlandı ve gerekçelendirildi.
+- Yine de **para harcama, hesap açma ve mağazaya yükleme yapılmadı**: bunlar yapımcının kimliği ve hesabıyla yapılmak zorunda (docs/LAUNCH.md).
+
+## D13 — GATE 2 (sanat yönü): varsayılan "Kâğıt Kesik" · 2026-11-26
+- Alternatifler: Neon Gece (en çarpıcı, ama hiper-gündelikte yaygın), Pastel Gün (sevimli, ama ayırt edici değil).
+- Gerekçe: Kâğıt doku + mürekkep kontur + gölgeli şeritler, mağazada sıradan AI görsellerinden ve neon klonlardan ayrışıyor, sıcak ve okunaklı. Diğer iki stil oynayarak (25★ / 40★) veya "Tüm temalar" IAP'ıyla açılan kozmetikler oldu (meta + gelir).
+
+## D14 — Reklam/ödeme için kendi Android eklentimiz (SisPlatform) · 2026-11-26
+- Topluluk eklentileri (poing-studios AdMob, GodotGooglePlayBilling) GitHub sayfaları proxy'de 403 verdiği için indirilemedi. Maven erişimi vardı.
+- Kotlin Godot v2 eklentisi: UMP onayı → AdMob (ödüllü + geçiş), Play Billing 9.1 (satın alma, onaylama, geri yükleme), paylaşım, uygulama içi değerlendirme. Tek AAR (`game/addons/sis_platform/bin`), kaynak `android_plugin/`.
+- AdMob 25.5 Kotlin 2.3 meta verisiyle geliyor, şablon Kotlin 2.1: `-Xskip-metadata-version-check` (API Java olduğu için güvenli).
+- Eklenti yoksa (masaüstü/test) `Platform` servisi sahte moda geçer: debug'da ödüllü reklam "başarılı", release'de görünmez (asla bozuk düğme yok).
+
+## D15 — Reklam politikası (oyunda kodlandı) · 2026-11-26
+- Geçiş reklamı: 10. bölümden önce yok, ≥180 sn ve ≥2 bölüm arayla, sadece bölüm sonu geçişinde.
+- Yama (ödüllü devam): deneme başına 1, ~1,5 sn geri sarar; yama kullanılan tur en fazla 1★ alır ve rekor kaydetmez.
+
+## D16 — Günlük kuyu: önceden doğrulanmış havuz · 2026-11-26
+- Cihazda prosedürel üretim + doğrulama pahalı ve riskli. Bunun yerine 60 prosedürel bölüm çevrimdışı üretildi, uzman bot çözdü, karma bot geçme oranı %30–86 bandında tutuldu (ortalama %64). Gün → havuz[gün mod 60]. Havuz araçla büyütülebilir (`tools/gen_daily.gd`).
+
+## D17 — Analitik yalnızca cihazda (şimdilik) · 2026-11-26
+- Firebase eklenmedi: ek SDK + `google-services.json` (yapımcının Firebase projesi) + Veri Güvenliği güncellemesi gerektirir. Olay şeması hazır (KPI.md); uzak analitik yumuşak lansmandan önce eklenmeli (yapımcı kararı).
+
+## D18 — Paket adı `com.palmandmore.sis`, sürüm 1.0.0 (kod 1) · 2026-11-26
+- İlk Play yüklemesinden sonra değiştirilemez. Repo adından türetildi; yapımcı farklı isterse ilk yüklemeden önce değiştirilmeli.
+
+## D19 — Yükleme anahtarı · 2026-11-26
+- 4096-bit RSA, 10000 gün, `secrets/` (git'te yok). Play App Signing kullanılacağı için kaybolursa Play Console'dan sıfırlanabilir. Yine de iki yerde yedeklenmeli.

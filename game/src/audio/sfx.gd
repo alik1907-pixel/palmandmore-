@@ -51,3 +51,10 @@ func set_loops(inflating: int, size01: float, wind01: float) -> void:
 
 func silence() -> void:
 	set_loops(0, 0.0, 0.0)
+
+func _exit_tree() -> void:
+	# release playbacks so the audio server holds no stream references at quit
+	for c in get_children():
+		if c is AudioStreamPlayer:
+			c.stop()
+			c.stream = null

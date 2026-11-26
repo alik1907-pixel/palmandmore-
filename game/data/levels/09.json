@@ -4,51 +4,52 @@
  "rows": [
   {
    "type": "gate",
-   "x": 360,
-   "gap": 180,
-   "space": 250
+   "x": 360.0,
+   "gap": 180.0,
+   "space": 250.0
   },
   {
    "type": "wind",
-   "dir": 1,
-   "space": 320,
-   "strength": 300
+   "dir": 1.0,
+   "space": 320.0,
+   "strength": 300.0
   },
   {
    "type": "bar",
-   "x0": 40,
-   "x1": 420,
-   "space": 0
+   "x0": 40.0,
+   "x1": 420.0,
+   "space": 0.0
   },
   {
    "type": "gate",
-   "x": 590,
-   "gap": 150,
-   "space": 170
+   "x": 590.0,
+   "gap": 150.0,
+   "space": 170.0
   },
   {
    "type": "gate",
-   "x": 360,
-   "gap": 150,
-   "space": 420
+   "x": 360.0,
+   "gap": 150.0,
+   "space": 420.0
   },
   {
    "type": "wind",
-   "dir": -1,
-   "space": 320,
-   "strength": 300
+   "dir": -1.0,
+   "space": 320.0,
+   "strength": 300.0
   },
   {
    "type": "bar",
-   "x0": 300,
-   "x1": 680,
-   "space": 0
+   "x0": 300.0,
+   "x1": 680.0,
+   "space": 0.0
   },
   {
    "type": "gate",
-   "x": 130,
-   "gap": 150,
-   "space": 170
+   "x": 130.0,
+   "gap": 150.0,
+   "space": 170.0
   }
- ]
+ ],
+ "par": 13.5
 }

@@ -18,5 +18,21 @@
 | 2026-11-26 | Planlayıcı bot, 40 koşu (M2) | Bölüm 1→15 kazanma | %97,5 → %22,5 | media/m2/levels_validation_40runs.jsonl; insan verisi değil |
 | 2026-11-26 | Planlayıcı bot | Bölüm süresi (kazananlar) | 9,7–26,4 sn | Hedef 15–40 sn; ilk bölümler kısa |
 
-## Analitik olay şeması
-M4'te tanımlanacak (tutorial_step, level_start/fail/complete, inflate_ms, pop_location, ad_offer/watch, share, iap...).
+## Analitik olay şeması (uygulandı: `game/src/services/analytics.gd`)
+Olaylar cihazda `user://events.jsonl` dosyasına (son 3000 satır) yazılır ve yerel eklentiye (`SisPlatform.logEvent` → Logcat) iletilir. Sunucuya gönderim yok. Firebase gibi bir arka uç eklenecekse tek bağlantı noktası burası; gizlilik politikası ve Veri Güvenliği formu da o zaman güncellenmeli.
+| Olay | Parametreler | Ne ölçer |
+|---|---|---|
+| session_start | sessions, day (kurulumdan beri gün) | D1/D7/D30, oturum sayısı |
+| consent | can_request_ads | Onay oranı (AB) |
+| screen_home | stars | Menü dönüşleri |
+| level_start | mode, level, attempt | Deneme sayısı, huni |
+| level_complete | mode, level, attempt, sec, stars, continued | Geçme oranı, süre, yıldız |
+| level_fail | mode, level, attempt, cause (spike/overinflate), x, y, progress, sec | **Patlama ısı haritası**, zorluk |
+| level_quit | mode, level, progress | Bırakma noktaları |
+| ad_offer_accept / ad_reward / ad_reward_fail | placement | Ödüllü reklam hunisi |
+| ad_interstitial | – | Geçiş reklamı sıklığı |
+| iap_click / purchase | product | IAP hunisi |
+| share | – | Viral katsayı girdisi |
+| skin_equip / theme_equip | skin / theme | Kozmetik ilgisi |
+
+**Kapalı testte veri toplama:** Test kullanıcısından `adb pull /sdcard/Android/data/com.palmandmore.sis/files/...` istemek pratik değil. Kapalı test KPI'ları Play Console istatistiklerinden (yükleme, kaldırma, ANR, çökme) + geri bildirim formundan alınır. Yumuşak lansman için uzak analitik gerekir. **Karar noktası (yapımcı):** Firebase Analytics eklenmesi; ek SDK, Veri Güvenliği güncellemesi gerektirir.

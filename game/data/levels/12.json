@@ -3,60 +3,61 @@
  "rows": [
   {
    "type": "gate",
-   "x": 360,
-   "gap": 140,
-   "space": 250
+   "x": 360.0,
+   "gap": 140.0,
+   "space": 250.0
   },
   {
    "type": "wind",
-   "dir": 1,
-   "space": 260,
-   "strength": 300
+   "dir": 1.0,
+   "space": 260.0,
+   "strength": 300.0
   },
   {
    "type": "wind",
-   "dir": -1,
-   "space": 260,
-   "strength": 300
+   "dir": -1.0,
+   "space": 260.0,
+   "strength": 300.0
   },
   {
    "type": "gate",
-   "x": 300,
-   "gap": 125,
-   "space": 150,
+   "x": 300.0,
+   "gap": 125.0,
+   "space": 150.0,
    "spiked": true
   },
   {
    "type": "wind",
-   "dir": -1,
-   "space": 260,
-   "strength": 300
+   "dir": -1.0,
+   "space": 260.0,
+   "strength": 300.0
   },
   {
    "type": "wind",
-   "dir": 1,
-   "space": 260,
-   "strength": 300
+   "dir": 1.0,
+   "space": 260.0,
+   "strength": 300.0
   },
   {
    "type": "gate",
-   "x": 420,
-   "gap": 120,
-   "space": 150,
+   "x": 420.0,
+   "gap": 120.0,
+   "space": 150.0,
    "spiked": true
   },
   {
    "type": "wind",
-   "dir": 1,
-   "space": 320,
-   "strength": 320
+   "dir": 1.0,
+   "space": 320.0,
+   "strength": 320.0
   },
   {
    "type": "gate",
-   "x": 540,
-   "gap": 115,
-   "space": 150,
+   "x": 540.0,
+   "gap": 115.0,
+   "space": 150.0,
    "spiked": true
   }
- ]
+ ],
+ "par": 16.6
 }

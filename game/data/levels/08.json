@@ -3,54 +3,55 @@
  "rows": [
   {
    "type": "gate",
-   "x": 360,
-   "gap": 120,
-   "space": 250
+   "x": 360.0,
+   "gap": 120.0,
+   "space": 250.0
   },
   {
    "type": "gate",
-   "x": 390,
-   "gap": 105,
-   "space": 360
+   "x": 390.0,
+   "gap": 105.0,
+   "space": 360.0
   },
   {
    "type": "wind",
-   "dir": 1,
-   "space": 280,
-   "strength": 260
+   "dir": 1.0,
+   "space": 280.0,
+   "strength": 260.0
   },
   {
    "type": "gate",
-   "x": 520,
-   "gap": 120,
-   "space": 150,
+   "x": 520.0,
+   "gap": 120.0,
+   "space": 150.0,
    "spiked": true
   },
   {
    "type": "gate",
-   "x": 520,
-   "gap": 110,
-   "space": 380,
-   "throat": 140
+   "x": 520.0,
+   "gap": 110.0,
+   "space": 380.0,
+   "throat": 140.0
   },
   {
    "type": "wind",
-   "dir": -1,
-   "space": 320,
-   "strength": 280
+   "dir": -1.0,
+   "space": 320.0,
+   "strength": 280.0
   },
   {
    "type": "gate",
-   "x": 250,
-   "gap": 115,
-   "space": 150,
+   "x": 250.0,
+   "gap": 115.0,
+   "space": 150.0,
    "spiked": true
   },
   {
    "type": "gate",
-   "x": 300,
-   "gap": 100,
-   "space": 380
+   "x": 300.0,
+   "gap": 100.0,
+   "space": 380.0
   }
- ]
+ ],
+ "par": 18.3
 }

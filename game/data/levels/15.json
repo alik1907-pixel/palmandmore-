@@ -3,33 +3,34 @@
  "rows": [
   {
    "type": "gate",
-   "x": 360,
-   "gap": 150,
-   "space": 250
+   "x": 360.0,
+   "gap": 150.0,
+   "space": 250.0
   },
   {
    "type": "gate",
-   "x": 360,
-   "gap": 150,
-   "space": 400,
-   "throat": 90,
+   "x": 360.0,
+   "gap": 150.0,
+   "space": 400.0,
+   "throat": 90.0,
    "throat_spiked": true
   },
   {
    "type": "gate",
-   "x": 360,
-   "gap": 150,
-   "space": 420,
-   "throat": 100,
+   "x": 360.0,
+   "gap": 150.0,
+   "space": 420.0,
+   "throat": 100.0,
    "throat_spiked": true
   },
   {
    "type": "gate",
-   "x": 360,
-   "gap": 150,
-   "space": 420,
-   "throat": 110,
+   "x": 360.0,
+   "gap": 150.0,
+   "space": 420.0,
+   "throat": 110.0,
    "throat_spiked": true
   }
- ]
+ ],
+ "par": 12.6
 }

@@ -1,0 +1,34 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+// Versions must match game/addons/sis_platform/sis_platform_export.gd (runtime dependencies).
+ext {
+    godotVersion = '4.7.2.stable'
+    adsVersion = '25.5.0'
+    umpVersion = '4.0.0'
+    billingVersion = '9.1.0'
+    reviewVersion = '2.0.2'
+}
+android {
+    namespace 'com.palmandmore.sisplatform'
+    compileSdk 36
+    defaultConfig { minSdk 24 }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+        // play-services-ads 25.x ships Kotlin 2.3 metadata; its public API is Java, so this is safe.
+        freeCompilerArgs += ['-Xskip-metadata-version-check']
+    }
+    buildFeatures { buildConfig false }
+}
+dependencies {
+    compileOnly "org.godotengine:godot:$godotVersion"
+    compileOnly "com.google.android.gms:play-services-ads:$adsVersion"
+    compileOnly "com.google.android.ump:user-messaging-platform:$umpVersion"
+    compileOnly "com.android.billingclient:billing:$billingVersion"
+    compileOnly "com.google.android.play:review:$reviewVersion"
+}

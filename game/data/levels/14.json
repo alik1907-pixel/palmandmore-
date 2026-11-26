@@ -3,63 +3,64 @@
  "rows": [
   {
    "type": "gate",
-   "x": 360,
-   "gap": 130,
-   "space": 250,
+   "x": 360.0,
+   "gap": 130.0,
+   "space": 250.0,
    "spiked": true
   },
   {
    "type": "strip",
    "side": "L",
-   "length": 400,
-   "space": 0
+   "length": 400.0,
+   "space": 0.0
   },
   {
    "type": "gate",
-   "x": 380,
-   "gap": 110,
-   "space": 400,
-   "throat": 150
+   "x": 380.0,
+   "gap": 110.0,
+   "space": 400.0,
+   "throat": 150.0
   },
   {
    "type": "wind",
-   "dir": 1,
-   "space": 300,
-   "strength": 280
+   "dir": 1.0,
+   "space": 300.0,
+   "strength": 280.0
   },
   {
    "type": "gate",
-   "x": 520,
-   "gap": 110,
-   "space": 150,
+   "x": 520.0,
+   "gap": 110.0,
+   "space": 150.0,
    "spiked": true
   },
   {
    "type": "wind",
-   "dir": -1,
-   "space": 320,
-   "strength": 260
+   "dir": -1.0,
+   "space": 320.0,
+   "strength": 260.0
   },
   {
    "type": "bar",
-   "x0": 330,
-   "x1": 680,
-   "space": 0
+   "x0": 330.0,
+   "x1": 680.0,
+   "space": 0.0
   },
   {
    "type": "gate",
-   "x": 180,
-   "gap": 120,
-   "space": 170,
+   "x": 180.0,
+   "gap": 120.0,
+   "space": 170.0,
    "spiked": true
   },
   {
    "type": "gate",
-   "x": 250,
-   "gap": 150,
-   "space": 400,
-   "throat": 100,
+   "x": 250.0,
+   "gap": 150.0,
+   "space": 400.0,
+   "throat": 100.0,
    "throat_spiked": true
   }
- ]
+ ],
+ "par": 23.6
 }

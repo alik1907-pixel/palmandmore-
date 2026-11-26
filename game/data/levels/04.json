@@ -4,45 +4,46 @@
  "rows": [
   {
    "type": "gate",
-   "x": 360,
-   "gap": 150,
-   "space": 250
+   "x": 360.0,
+   "gap": 150.0,
+   "space": 250.0
   },
   {
    "type": "wind",
-   "dir": 1,
-   "space": 300,
-   "strength": 260
+   "dir": 1.0,
+   "space": 300.0,
+   "strength": 260.0
   },
   {
    "type": "gate",
-   "x": 500,
-   "gap": 150,
-   "space": 150
+   "x": 500.0,
+   "gap": 150.0,
+   "space": 150.0
   },
   {
    "type": "wind",
-   "dir": -1,
-   "space": 320,
-   "strength": 260
+   "dir": -1.0,
+   "space": 320.0,
+   "strength": 260.0
   },
   {
    "type": "gate",
-   "x": 230,
-   "gap": 150,
-   "space": 150
+   "x": 230.0,
+   "gap": 150.0,
+   "space": 150.0
   },
   {
    "type": "wind",
-   "dir": 1,
-   "space": 320,
-   "strength": 260
+   "dir": 1.0,
+   "space": 320.0,
+   "strength": 260.0
   },
   {
    "type": "gate",
-   "x": 450,
-   "gap": 140,
-   "space": 150
+   "x": 450.0,
+   "gap": 140.0,
+   "space": 150.0
   }
- ]
+ ],
+ "par": 12.0
 }

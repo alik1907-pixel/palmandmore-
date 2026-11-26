@@ -4,30 +4,31 @@
  "rows": [
   {
    "type": "gate",
-   "x": 360,
-   "gap": 200,
-   "space": 250
+   "x": 360.0,
+   "gap": 200.0,
+   "space": 250.0
   },
   {
    "type": "gate",
-   "x": 360,
-   "gap": 120,
-   "space": 400,
-   "throat": 110
+   "x": 360.0,
+   "gap": 120.0,
+   "space": 400.0,
+   "throat": 110.0
   },
   {
    "type": "gate",
-   "x": 360,
-   "gap": 115,
-   "space": 420,
-   "throat": 170
+   "x": 360.0,
+   "gap": 115.0,
+   "space": 420.0,
+   "throat": 170.0
   },
   {
    "type": "gate",
-   "x": 360,
-   "gap": 110,
-   "space": 420,
-   "throat": 200
+   "x": 360.0,
+   "gap": 110.0,
+   "space": 420.0,
+   "throat": 200.0
   }
- ]
+ ],
+ "par": 14.0
 }

@@ -74,6 +74,20 @@ Tek tuşla şişip sönen jöle bir balonu dikenli, rüzgârlı, daracık bir ku
 ## 12. Bölüm listesi (M2)
 1 İlk Nefes · 2 Dar Kapı · 3 Ritim · 4 Esinti · 5 Dikenli Huni · 6 Boğaz · 7 Fırtına · 8 Uzun Yol · 9 Tavan · 10 Dikenli Boğaz · 11 Zikzak Tavan · 12 Ters Rüzgâr · 13 Zirve · 14 Eldiven · 15 İğne Deliği
 
+## 13. Meta ve uygulama akışı (M4, uygulandı)
+- **Ana menü:** canlı maskot (gerçek BalloonSim; basılı tutunca şişer), yıldız sayacı, günlük kuyu kartı (#numara + 🔥 seri), 15 bölüm ızgarası (★ 0–3, kilit), OYNA (sıradaki bölüm), Balonlar / Temalar / Reklamsız düğmeleri, Ayarlar.
+- **Yıldızlar:** ★ bitir · ★★ par×2,0 altında · ★★★ par×1,35 altında. Par = uzman planlayıcı süresi (`tools/compute_par.gd`). Yama kullanılırsa en fazla ★.
+- **Günlük kuyu:** herkese aynı (yerel tarih), 60 doğrulanmış bölümlük havuz; seri dün/bugün oynandıysa sürer; aynı gün tekrar oynamak seriyi şişirmez; günlük en iyi süre saklanır.
+- **Kozmetik:** 10 balon (yıldız ve seri eşikleri, 1 ödüllü reklam, 1 IAP), 3 tema (varsayılan Kâğıt Kesik; Neon Gece 25★; Pastel Gün 40★; "Tüm temalar" IAP).
+- **Paylaşım:** sonuç ekranında sistem paylaşım menüsü; metin: "ŞİŞ Günlük #N 🎈 14.2 sn ⭐⭐⭐ 🔥5 + mağaza linki" (8 dilde).
+- **Değerlendirme isteği:** 6. bölüm ilk kez ★★★ ile bitince, bir kez (Play In-App Review).
+- **Ayarlar:** ses, müzik, titreşim, dil (8 dil; varsayılan sistem dili), reklamsız, satın alımları geri yükle, gizlilik seçenekleri (UMP gerekiyorsa), gizlilik politikası.
+- **Android:** geri tuşu (panel kapat → menü → çıkış), arka plana atılınca basılı tutma bırakılır, çoklu parmak desteği.
+
+## 14. Ses ve müzik (M3, uygulandı)
+- SFX: sentez (patlama, gıcırtı, sıkışma, tıslama/söndürme döngüleri, rüzgâr, tik, vınlama, arpej).
+- Müzik: 4 katmanlı uyarlanabilir döngü (pad, bas, arpej, perküsyon; Am–F–C–G, 120 BPM), işçi iş parçacığında açılışta sentezlenir. Menüde sadece pad; oyunda bas; büyüklükle arpej; rüzgâr/yüksek ilerlemede perküsyon.
+
 ## 11. Açık sorular
-- Isı haritası backend'i (Firebase Firestore vs. sunucusuz yaklaşık çözüm), M4'te karar.
+- Isı haritası ve uzak analitik backend'i (Firebase): yapımcı kararı bekliyor (D17). Olaylar zaten konumla kaydediliyor (level_fail x/y).
 - Oyunun son adı ve mağaza dili, M7'de ASO araştırmasıyla.

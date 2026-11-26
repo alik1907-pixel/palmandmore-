@@ -4,22 +4,23 @@
  "rows": [
   {
    "type": "gate",
-   "x": 360,
-   "gap": 250,
-   "space": 250
+   "x": 360.0,
+   "gap": 250.0,
+   "space": 250.0
   },
   {
    "type": "gate",
-   "x": 360,
-   "gap": 230,
-   "space": 420
+   "x": 360.0,
+   "gap": 230.0,
+   "space": 420.0
   },
   {
    "type": "gate",
-   "x": 360,
-   "gap": 220,
-   "space": 420
+   "x": 360.0,
+   "gap": 220.0,
+   "space": 420.0
   }
  ],
- "overpop": false
+ "overpop": false,
+ "par": 8.6
 }

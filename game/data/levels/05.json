@@ -3,43 +3,44 @@
  "rows": [
   {
    "type": "gate",
-   "x": 360,
-   "gap": 170,
-   "space": 250,
+   "x": 360.0,
+   "gap": 170.0,
+   "space": 250.0,
    "spiked": true
   },
   {
    "type": "wind",
-   "dir": 1,
-   "space": 280,
-   "strength": 260
+   "dir": 1.0,
+   "space": 280.0,
+   "strength": 260.0
   },
   {
    "type": "gate",
-   "x": 470,
-   "gap": 160,
-   "space": 150,
+   "x": 470.0,
+   "gap": 160.0,
+   "space": 150.0,
    "spiked": true
   },
   {
    "type": "wind",
-   "dir": -1,
-   "space": 300,
-   "strength": 260
+   "dir": -1.0,
+   "space": 300.0,
+   "strength": 260.0
   },
   {
    "type": "gate",
-   "x": 260,
-   "gap": 160,
-   "space": 150,
+   "x": 260.0,
+   "gap": 160.0,
+   "space": 150.0,
    "spiked": true
   },
   {
    "type": "gate",
-   "x": 260,
-   "gap": 130,
-   "space": 380,
+   "x": 260.0,
+   "gap": 130.0,
+   "space": 380.0,
    "spiked": true
   }
- ]
+ ],
+ "par": 11.4
 }

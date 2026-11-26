@@ -3,34 +3,35 @@
  "rows": [
   {
    "type": "gate",
-   "x": 340,
-   "gap": 110,
-   "space": 300
+   "x": 340.0,
+   "gap": 110.0,
+   "space": 300.0
   },
   {
    "type": "gate",
-   "x": 380,
-   "gap": 104,
-   "space": 360
+   "x": 380.0,
+   "gap": 104.0,
+   "space": 360.0
   },
   {
    "type": "gate",
-   "x": 350,
-   "gap": 100,
-   "space": 360
+   "x": 350.0,
+   "gap": 100.0,
+   "space": 360.0
   },
   {
    "type": "gate",
-   "x": 390,
-   "gap": 100,
-   "space": 360
+   "x": 390.0,
+   "gap": 100.0,
+   "space": 360.0
   },
   {
    "type": "gate",
-   "x": 360,
-   "gap": 96,
-   "space": 360
+   "x": 360.0,
+   "gap": 96.0,
+   "space": 360.0
   }
  ],
- "hint": "overpop"
+ "hint": "overpop",
+ "par": 16.9
 }
