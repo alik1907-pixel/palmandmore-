@@ -1,0 +1,35 @@
+{
+ "name": "İğne Deliği",
+ "rows": [
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 150,
+   "space": 250
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 150,
+   "space": 400,
+   "throat": 90,
+   "throat_spiked": true
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 150,
+   "space": 420,
+   "throat": 100,
+   "throat_spiked": true
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 150,
+   "space": 420,
+   "throat": 110,
+   "throat_spiked": true
+  }
+ ]
+}

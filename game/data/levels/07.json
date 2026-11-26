@@ -1,0 +1,50 @@
+{
+ "name": "Fırtına",
+ "rows": [
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 140,
+   "space": 250
+  },
+  {
+   "type": "wind",
+   "dir": 1,
+   "space": 300,
+   "strength": 300
+  },
+  {
+   "type": "gate",
+   "x": 510,
+   "gap": 130,
+   "space": 150,
+   "spiked": true
+  },
+  {
+   "type": "wind",
+   "dir": -1,
+   "space": 320,
+   "strength": 300
+  },
+  {
+   "type": "gate",
+   "x": 220,
+   "gap": 125,
+   "space": 150,
+   "spiked": true
+  },
+  {
+   "type": "wind",
+   "dir": 1,
+   "space": 320,
+   "strength": 300
+  },
+  {
+   "type": "gate",
+   "x": 470,
+   "gap": 120,
+   "space": 150,
+   "spiked": true
+  }
+ ]
+}

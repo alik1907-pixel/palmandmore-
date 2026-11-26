@@ -1,0 +1,65 @@
+{
+ "name": "Eldiven",
+ "rows": [
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 130,
+   "space": 250,
+   "spiked": true
+  },
+  {
+   "type": "strip",
+   "side": "L",
+   "length": 400,
+   "space": 0
+  },
+  {
+   "type": "gate",
+   "x": 380,
+   "gap": 110,
+   "space": 400,
+   "throat": 150
+  },
+  {
+   "type": "wind",
+   "dir": 1,
+   "space": 300,
+   "strength": 280
+  },
+  {
+   "type": "gate",
+   "x": 520,
+   "gap": 110,
+   "space": 150,
+   "spiked": true
+  },
+  {
+   "type": "wind",
+   "dir": -1,
+   "space": 320,
+   "strength": 260
+  },
+  {
+   "type": "bar",
+   "x0": 330,
+   "x1": 680,
+   "space": 0
+  },
+  {
+   "type": "gate",
+   "x": 180,
+   "gap": 120,
+   "space": 170,
+   "spiked": true
+  },
+  {
+   "type": "gate",
+   "x": 250,
+   "gap": 150,
+   "space": 400,
+   "throat": 100,
+   "throat_spiked": true
+  }
+ ]
+}

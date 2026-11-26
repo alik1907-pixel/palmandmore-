@@ -1,0 +1,54 @@
+{
+ "name": "Tavan",
+ "hint": "bar",
+ "rows": [
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 180,
+   "space": 250
+  },
+  {
+   "type": "wind",
+   "dir": 1,
+   "space": 320,
+   "strength": 300
+  },
+  {
+   "type": "bar",
+   "x0": 40,
+   "x1": 420,
+   "space": 0
+  },
+  {
+   "type": "gate",
+   "x": 590,
+   "gap": 150,
+   "space": 170
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 150,
+   "space": 420
+  },
+  {
+   "type": "wind",
+   "dir": -1,
+   "space": 320,
+   "strength": 300
+  },
+  {
+   "type": "bar",
+   "x0": 300,
+   "x1": 680,
+   "space": 0
+  },
+  {
+   "type": "gate",
+   "x": 130,
+   "gap": 150,
+   "space": 170
+  }
+ ]
+}

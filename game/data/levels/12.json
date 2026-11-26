@@ -1,0 +1,62 @@
+{
+ "name": "Ters Rüzgâr",
+ "rows": [
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 140,
+   "space": 250
+  },
+  {
+   "type": "wind",
+   "dir": 1,
+   "space": 260,
+   "strength": 300
+  },
+  {
+   "type": "wind",
+   "dir": -1,
+   "space": 260,
+   "strength": 300
+  },
+  {
+   "type": "gate",
+   "x": 300,
+   "gap": 125,
+   "space": 150,
+   "spiked": true
+  },
+  {
+   "type": "wind",
+   "dir": -1,
+   "space": 260,
+   "strength": 300
+  },
+  {
+   "type": "wind",
+   "dir": 1,
+   "space": 260,
+   "strength": 300
+  },
+  {
+   "type": "gate",
+   "x": 420,
+   "gap": 120,
+   "space": 150,
+   "spiked": true
+  },
+  {
+   "type": "wind",
+   "dir": 1,
+   "space": 320,
+   "strength": 320
+  },
+  {
+   "type": "gate",
+   "x": 540,
+   "gap": 115,
+   "space": 150,
+   "spiked": true
+  }
+ ]
+}

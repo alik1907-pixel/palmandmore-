@@ -3,27 +3,33 @@
 _Son güncelleme: 2026-11-26_
 
 ## M0 — Ortam: KISMEN TAMAM (engelli)
-- [x] OS tespiti: Linux x86_64 bulut konteyneri, 4 çekirdek, 15 GB RAM. **KVM yok.**
-- [x] Godot 4.7.2-stable (son kararlı sürüm) kuruldu: `/opt/godot`, `godot` komutu.
-- [x] Godot Android export şablonları kuruldu.
-- [x] Godot projesi (`game/`) oluşturuldu; headless çalıştırma ve Xvfb ile `--write-movie` video kaydı doğrulandı.
-- [x] JDK: sistemde OpenJDK 21 var (brief JDK 17 diyor). Godot 4.7 ile uyum APK aşamasında doğrulanacak: DOĞRULANMADI.
-- [x] Android SDK cmdline-tools indirildi (`/opt/android-sdk`).
-- [ ] **ENGEL:** `platform-tools`, `build-tools;36.0.0`, `platforms;android-36` kurulumu için Android SDK lisans sözleşmelerini kabul etmek gerekiyor. Kurallar gereği yapımcı onayı bekleniyor.
-- [ ] `scripts/build_debug.sh`: yazıldı, SDK kurulana kadar test edilemiyor.
-- [ ] **ENGEL:** Emülatör bu makinede çalışmaz (KVM yok). Alternatif: yapımcının telefonu (USB hata ayıklama + adb) veya yapımcının PC'si (Remote Control ile bağlanırsa).
+- [x] Godot 4.7.2 + Android export şablonları, Xvfb video kaydı, headless test/sim.
+- [ ] **ENGEL (yapımcı onayı):** Android SDK lisans kabulü → platform-tools, build-tools 36, platform 36 → APK.
+- [ ] **ENGEL:** Bu makinede emülatör yok (KVM yok). Cihaz testi yapımcının telefonu/PC'si ile.
 
-## M1 — Fikir üretimi ve eleme: GATE 1 BEKLİYOR
-- [x] Pazar/politika araştırması: docs/RESEARCH.md
-- [x] 12 konsept + ağırlıklı puanlama: docs/CONCEPTS.md
-- [x] 3 greybox prototip (ŞİŞ, KIRILMA, DALGA): `game/prototypes/`
-- [x] Her biri 8 bölüm × 40 bot = 320 oyun; sonuçlar `media/m1/*_botsim.jsonl`
-- [x] 10 sn dikey videolar: `media/m1/*_greybox_10s.mp4`
-- [x] GATE 1 raporu: docs/GATE1.md
-- [ ] Yapımcı seçimi → docs/GDD.md
+## M1 — Fikir: TAMAM
+- GATE 1 → **ŞİŞ** seçildi (2026-11-26). Rapor: docs/GATE1.md.
 
-## Açık sorunlar
-- ŞİŞ: Bölüm 5+ zorluk uçurumu; huniye takılma.
-- KIRILMA: bot başarısı düşük (bot zayıflığı mı, tasarım mı? İnsan testi gerekli).
-- DALGA: Bölüm 7 %0.
-- Repo kökünde boş Expo/React Native dosyaları var (app.json, package.json, eas.json vb.); yapımcıya soruldu, dokunulmadı.
+## M2 — Dikey dilim: KOD TAMAM, CİHAZ TESTİ BEKLİYOR
+- [x] GDD yazıldı (docs/GDD.md).
+- [x] Deterministik yumuşak gövde simülasyonu `BalloonSim` (tüm denge `Tuning` kaynağında), olay yayını (pop/hit/squeeze/near_miss/won).
+- [x] Bölüm formatı (JSON) + `LevelBuilder`: kapı, huni, dikenli huni, rüzgâr, boğaz, dikenli boğaz (güvenli yaka), diken tavanı, duvar dikeni.
+- [x] 15 el yapımı bölüm (her biri bir engel öğretir, sonra kombinasyon).
+- [x] Oyun ekranı: kamera, Catmull-Rom yumuşak balon çizimi, yüz ifadeleri (bakış, göz kırpma, zorlanma, korku, mutluluk), iz, rüzgâr çizgileri, ilerleme çubuğu, ikonla tekrar/sonraki.
+- [x] Juice: hit-stop (6 kare), sarsıntı, flaş, parçacıklar, konfeti, kıl payı yavaş çekim, haptik (mobilde).
+- [x] Sentez sesler (dosya yok): patlama, gıcırtı, sıkışma, tıslama/söndürme döngüleri (perde boyuta bağlı), rüzgâr, tik, vınlama, kazanma arpeji.
+- [x] Yazısız öğretici: bas (B1), bırak (B2), aşırı şişme (B3), rüzgâr (B4) ikonları.
+- [x] İlerleme kaydı (`user://save.cfg`).
+- [x] Testler 10/10 yeşil: replay birebir aynı sonuç, aynı girdi = aynı hash, klon bağımsızlığı, kurallar, uzman 15/15 bölümü çözüyor, sim adımı ~88 µs.
+- [x] Bölüm doğrulama (karma beceri, 40 koşu): `media/m2/levels_validation_40runs.jsonl`
+- [x] Video: `media/m2/sis_vertical_slice.mp4` (42 sn, sesli, 1080x1920).
+- [ ] Girdi gecikmesi ≤ 1 kare: kodda girdi sonraki fizik adımında okunuyor (≤16,7 ms). Cihazda ölçülmedi: DOĞRULANMADI.
+- [ ] Düşük donanımda 60 FPS: DOĞRULANMADI (APK yok).
+- [ ] "Talimatsız oyuncu 60 sn'de B1'i bitirir": bot B1'i ~10 sn'de %100 bitiriyor; **insan testi bekliyor**.
+
+## Açık sorunlar / sonraki adımlar
+- APK + telefon testi (M0 engeli).
+- Bot ≠ insan: 1–9. bölümler botlar için çok kolay (%90+). İnsan verisiyle yeniden ayarlanacak.
+- Aşırı şişirme kırmızı bölgesinin "rüzgârda yelken" taktiği, bölüm tasarımında henüz bilinçli kullanılmıyor.
+- Sanat yönü (M3, GATE 2), müzik yok (M3).
+- Repo kökündeki boş Expo dosyaları duruyor (yapımcı karar vermedi).

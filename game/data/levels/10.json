@@ -1,0 +1,34 @@
+{
+ "name": "Dikenli Boğaz",
+ "rows": [
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 130,
+   "space": 250,
+   "throat": 120
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 160,
+   "space": 420,
+   "throat": 80,
+   "throat_spiked": true
+  },
+  {
+   "type": "wind",
+   "dir": 1,
+   "space": 300,
+   "strength": 260
+  },
+  {
+   "type": "gate",
+   "x": 480,
+   "gap": 160,
+   "space": 150,
+   "throat": 80,
+   "throat_spiked": true
+  }
+ ]
+}

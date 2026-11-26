@@ -1,0 +1,56 @@
+{
+ "name": "Uzun Yol",
+ "rows": [
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 120,
+   "space": 250
+  },
+  {
+   "type": "gate",
+   "x": 390,
+   "gap": 105,
+   "space": 360
+  },
+  {
+   "type": "wind",
+   "dir": 1,
+   "space": 280,
+   "strength": 260
+  },
+  {
+   "type": "gate",
+   "x": 520,
+   "gap": 120,
+   "space": 150,
+   "spiked": true
+  },
+  {
+   "type": "gate",
+   "x": 520,
+   "gap": 110,
+   "space": 380,
+   "throat": 140
+  },
+  {
+   "type": "wind",
+   "dir": -1,
+   "space": 320,
+   "strength": 280
+  },
+  {
+   "type": "gate",
+   "x": 250,
+   "gap": 115,
+   "space": 150,
+   "spiked": true
+  },
+  {
+   "type": "gate",
+   "x": 300,
+   "gap": 100,
+   "space": 380
+  }
+ ]
+}

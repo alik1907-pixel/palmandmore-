@@ -25,3 +25,24 @@
 - ŞİŞ: Düz tavanlı kapılar balonu sıkıştırıyordu → tam huniye çevrildi. Dikenler sadece rüzgâr bölgesi olan kapılarda (oyuncuya araç verilmeden ceza yok).
 - KIRILMA: Panel üst kenardan değil, yalnızca süsün sapından asılı → oyulan bölgeler büyük parçalar hâlinde düşüyor. Çatlak süse çarpınca o yönde duruyor (en fazla bir süs parçası kırılır).
 - DALGA: Taş çukur değil kabarma oluşturuyor → fener taştan uzağa itiliyor (sezgisel). Sönüm 0,99 → dalgalar ~2 sn'de yatışıyor.
+
+## D8 — GATE 1: ŞİŞ seçildi · 2026-11-26
+- Yapımcı kararı ("1.yi yap"). KIRILMA ve DALGA prototipleri `game/prototypes/` altında arşiv olarak duruyor.
+
+## D9 — Test çerçevesi: GUT yerine GUT tarzı minimal koşucu · 2026-11-26
+- GUT indirilemedi (github arşivleri ve godotengine.org proxy'de 403). `tests/test_case.gd` + `tools/run_tests.gd` aynı yapıyı (test_*.gd / test_* metotları) kullanır; ileride GUT'a geçiş kolay.
+
+## D10 — Bölüm doğrulama botu: kural tabanlıdan planlayıcıya (MPC) · 2026-11-26
+- Kural tabanlı bot her yeni engel türünde yeni kural istiyordu ve sonuçlar bot hatalarını ölçüyordu. `BalloonPlanner`, simülasyonun kopyasında 9 basma/bırakma desenini 54 kare ileri oynatıp en iyisini seçer.
+- Beceri parametreleri: düşünülen desen sayısı, tepki gecikmesi (12→0 kare), hata oranı (%10→0), aşırı şişirme ve diken güvenlik payı. Uzman = çözülebilirlik kanıtı.
+- Sınır: bot insan değildir. Gerçek zorluk verisi kapalı testte toplanacak.
+
+## D11 — Fizik ayarları (bot verisiyle) · 2026-11-26
+- Dikey hava direnci (son hız ~350 px/sn): eskiden 1. bölüm 2,4 sn'de bitiyordu, şimdi ~8–10 sn.
+- Kaldırma kuvveti r_pop'ta doyuyor: aşırı şişirme her bölümde baskın ölüm nedeniydi (%60–90); şimdi ~%0–4.
+- Aşırı şişirme patlaması 1–2. bölümlerde kapalı (her bölüm tek kavram öğretir). Uyarı süresi 0,67 → 1,2 sn.
+- Rüzgâr ×0,62 ve yanal sürüklenme 1,6: balon köşeye savrulup kurtulamıyordu.
+- Duvar sürtünmesi 0,9 → 0,985 (iterasyon başına) ve huni eğimi en az ~33°: balon yatık eğimlerde takılıyordu.
+- Kaygan kapı ağızları (lip_slip): balon sivri köşede dengede kalıp takılıyordu.
+- Dikenli boğaz: 40 px dikensiz yaka, genişlik 150 (tanıtımda 160), uzunluk ≤ 120.
+- "Takıldın" gerçek oyunda başarısızlık değil; sadece doğrulayıcı 15 sn limit kullanır.

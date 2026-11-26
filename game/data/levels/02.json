@@ -1,0 +1,31 @@
+{
+ "name": "Dar Kapı",
+ "hint": "release",
+ "rows": [
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 240,
+   "space": 250
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 120,
+   "space": 420
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 110,
+   "space": 420
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 110,
+   "space": 420
+  }
+ ],
+ "overpop": false
+}

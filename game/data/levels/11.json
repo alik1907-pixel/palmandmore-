@@ -1,0 +1,55 @@
+{
+ "name": "Zikzak Tavan",
+ "rows": [
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 160,
+   "space": 250
+  },
+  {
+   "type": "wind",
+   "dir": -1,
+   "space": 320,
+   "strength": 260
+  },
+  {
+   "type": "bar",
+   "x0": 250,
+   "x1": 680,
+   "space": 0
+  },
+  {
+   "type": "gate",
+   "x": 130,
+   "gap": 140,
+   "space": 170,
+   "spiked": true
+  },
+  {
+   "type": "wind",
+   "dir": 1,
+   "space": 340,
+   "strength": 260
+  },
+  {
+   "type": "bar",
+   "x0": 40,
+   "x1": 470,
+   "space": 0
+  },
+  {
+   "type": "gate",
+   "x": 590,
+   "gap": 140,
+   "space": 170,
+   "spiked": true
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 120,
+   "space": 420
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+{
+ "name": "İlk Nefes",
+ "hint": "hold",
+ "rows": [
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 250,
+   "space": 250
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 230,
+   "space": 420
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 220,
+   "space": 420
+  }
+ ],
+ "overpop": false
+}

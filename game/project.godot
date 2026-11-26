@@ -2,9 +2,9 @@
 config_version=5
 
 [application]
-config/name="Studio Prototypes"
+config/name="SIS"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-run/main_scene="res://main.tscn"
+run/main_scene="res://src/game/game_screen.tscn"
 
 [display]
 window/size/viewport_width=720

@@ -1,0 +1,48 @@
+{
+ "name": "Esinti",
+ "hint": "wind",
+ "rows": [
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 150,
+   "space": 250
+  },
+  {
+   "type": "wind",
+   "dir": 1,
+   "space": 300,
+   "strength": 260
+  },
+  {
+   "type": "gate",
+   "x": 500,
+   "gap": 150,
+   "space": 150
+  },
+  {
+   "type": "wind",
+   "dir": -1,
+   "space": 320,
+   "strength": 260
+  },
+  {
+   "type": "gate",
+   "x": 230,
+   "gap": 150,
+   "space": 150
+  },
+  {
+   "type": "wind",
+   "dir": 1,
+   "space": 320,
+   "strength": 260
+  },
+  {
+   "type": "gate",
+   "x": 450,
+   "gap": 140,
+   "space": 150
+  }
+ ]
+}

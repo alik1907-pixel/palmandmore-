@@ -1,0 +1,45 @@
+{
+ "name": "Dikenli Huni",
+ "rows": [
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 170,
+   "space": 250,
+   "spiked": true
+  },
+  {
+   "type": "wind",
+   "dir": 1,
+   "space": 280,
+   "strength": 260
+  },
+  {
+   "type": "gate",
+   "x": 470,
+   "gap": 160,
+   "space": 150,
+   "spiked": true
+  },
+  {
+   "type": "wind",
+   "dir": -1,
+   "space": 300,
+   "strength": 260
+  },
+  {
+   "type": "gate",
+   "x": 260,
+   "gap": 160,
+   "space": 150,
+   "spiked": true
+  },
+  {
+   "type": "gate",
+   "x": 260,
+   "gap": 130,
+   "space": 380,
+   "spiked": true
+  }
+ ]
+}

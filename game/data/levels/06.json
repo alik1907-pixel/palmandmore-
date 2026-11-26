@@ -1,0 +1,33 @@
+{
+ "name": "Boğaz",
+ "hint": "throat",
+ "rows": [
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 200,
+   "space": 250
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 120,
+   "space": 400,
+   "throat": 110
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 115,
+   "space": 420,
+   "throat": 170
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 110,
+   "space": 420,
+   "throat": 200
+  }
+ ]
+}

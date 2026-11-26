@@ -1,0 +1,36 @@
+{
+ "name": "Ritim",
+ "rows": [
+  {
+   "type": "gate",
+   "x": 340,
+   "gap": 110,
+   "space": 300
+  },
+  {
+   "type": "gate",
+   "x": 380,
+   "gap": 104,
+   "space": 360
+  },
+  {
+   "type": "gate",
+   "x": 350,
+   "gap": 100,
+   "space": 360
+  },
+  {
+   "type": "gate",
+   "x": 390,
+   "gap": 100,
+   "space": 360
+  },
+  {
+   "type": "gate",
+   "x": 360,
+   "gap": 96,
+   "space": 360
+  }
+ ],
+ "hint": "overpop"
+}
