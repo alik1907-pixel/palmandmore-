@@ -17,3 +17,4 @@ game/android/
 android_plugin/.gradle/
 android_plugin/build/
 android_plugin/plugin/build/
+media/clips/raw/

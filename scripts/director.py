@@ -47,6 +47,21 @@ def find_seed(level, skill, outcome):
     return None, None
 
 
+def burn(name, text):
+    """Burns the hook caption onto the raw clip (re-runnable without re-rendering)."""
+    clean = "".join(ch for ch in text if ord(ch) < 0x2000).strip()   # emoji only in post text
+    size = max(44, min(70, int(1900 / max(len(clean), 1))))
+    with tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False) as f:
+        f.write(clean)
+        txt = f.name
+    vf = (f"drawtext=fontfile={FONT}:textfile={txt}:fontcolor=white:fontsize={size}:borderw=7:"
+          f"bordercolor=#2b2522:expansion=none:x=(w-text_w)/2:y=260")
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", os.path.join(OUT, "raw", f"{name}.mp4"), "-vf", vf,
+                    "-c:v", "libx264", "-crf", "21", "-preset", "veryfast", "-c:a", "copy",
+                    os.path.join(OUT, f"{name}.mp4")], check=True)
+    os.unlink(txt)
+
+
 def make(recipe, writer):
     name, level, skill, outcome, style, fmt, tr, en, secs = recipe
     seed, sim_frames = find_seed(level, skill, outcome)
@@ -60,23 +75,24 @@ def make(recipe, writer):
         godot("--rendering-driver", "opengl3", "--resolution", "720x1280", "--write-movie", f"{tmp}/f.png",
               "--fixed-fps", str(FPS), "--quit-after", str(end + 5), "--", "demo", "style", style,
               "autoplay", str(level), str(skill), str(seed + 1), "1", display=True)
-        txt = os.path.join(tmp, "hook.txt")
-        with open(txt, "w") as f:
-            f.write(tr)
-        vf = (f"scale=1080:1920:flags=lanczos,format=yuv420p,"
-              f"drawtext=fontfile={FONT}:textfile={txt}:fontcolor=white:fontsize=70:borderw=7:"
-              f"bordercolor=#2b2522:x=(w-text_w)/2:y=260")
-        os.makedirs(OUT, exist_ok=True)
-        dst = os.path.join(OUT, f"{name}.mp4")
+        os.makedirs(os.path.join(OUT, "raw"), exist_ok=True)
+        raw = os.path.join(OUT, "raw", f"{name}.mp4")
         subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-framerate", str(FPS), "-start_number", str(start),
                         "-i", f"{tmp}/f%08d.png", "-ss", f"{start / FPS:.3f}", "-t", f"{(end - start) / FPS:.3f}",
-                        "-i", f"{tmp}/f.wav", "-frames:v", str(end - start), "-vf", vf, "-c:v", "libx264", "-crf", "21",
-                        "-preset", "veryfast", "-c:a", "aac", "-b:a", "128k", "-shortest", dst], check=True)
+                        "-i", f"{tmp}/f.wav", "-frames:v", str(end - start),
+                        "-vf", "scale=1080:1920:flags=lanczos,format=yuv420p", "-c:v", "libx264", "-crf", "20",
+                        "-preset", "veryfast", "-c:a", "aac", "-b:a", "128k", "-shortest", raw], check=True)
+    burn(name, tr)
     writer.writerow([f"{name}.mp4", fmt, level, style, tr, en, f"{tr} {HASHTAGS}", f"{en} #mobilegame #indiegame #satisfying"])
     print(f"[ok] {name} level={level} seed={seed} {outcome}@{event}f")
 
 
 def main():
+    if sys.argv[1:2] == ["--reburn"]:          # captions only, from media/clips/raw
+        for r in RECIPES:
+            if os.path.exists(os.path.join(OUT, "raw", f"{r[0]}.mp4")):
+                burn(r[0], r[6])
+        return
     wanted = set(sys.argv[1:])
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, "clips.csv")
