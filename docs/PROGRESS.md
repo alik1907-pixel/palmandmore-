@@ -22,6 +22,7 @@ _Son güncelleme: 2026-11-26_
 - [x] İlerleme kaydı (`user://save.cfg`).
 - [x] Testler 10/10 yeşil: replay birebir aynı sonuç, aynı girdi = aynı hash, klon bağımsızlığı, kurallar, uzman 15/15 bölümü çözüyor, sim adımı ~88 µs.
 - [x] Bölüm doğrulama (karma beceri, 40 koşu): `media/m2/levels_validation_40runs.jsonl`
+  - Kazanma: B1–9 %92–100 · B10 %62,5 · B11 %47,5 · B12 %42,5 · B13 %25 · B14 %22,5 · B15 %22,5. Ölümlerin neredeyse tamamı dikenlerden; aşırı şişirme ≤ %5.
 - [x] Video: `media/m2/sis_vertical_slice.mp4` (42 sn, sesli, 1080x1920).
 - [ ] Girdi gecikmesi ≤ 1 kare: kodda girdi sonraki fizik adımında okunuyor (≤16,7 ms). Cihazda ölçülmedi: DOĞRULANMADI.
 - [ ] Düşük donanımda 60 FPS: DOĞRULANMADI (APK yok).

@@ -15,6 +15,8 @@
 | Tarih | Kaynak | Metrik | Değer | Not |
 |---|---|---|---|---|
 | 2026-11-26 | Bot (greybox) | Bölüm başarı eğrileri | CONCEPTS.md | İnsan verisi değil |
+| 2026-11-26 | Planlayıcı bot, 40 koşu (M2) | Bölüm 1→15 kazanma | %97,5 → %22,5 | media/m2/levels_validation_40runs.jsonl; insan verisi değil |
+| 2026-11-26 | Planlayıcı bot | Bölüm süresi (kazananlar) | 9,7–26,4 sn | Hedef 15–40 sn; ilk bölümler kısa |
 
 ## Analitik olay şeması
 M4'te tanımlanacak (tutorial_step, level_start/fail/complete, inflate_ms, pop_location, ad_offer/watch, share, iap...).
