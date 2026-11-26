@@ -1,0 +1,14 @@
+# Godot
+game/.godot/
+*.import.tmp
+# Build outputs
+build/
+*.apk
+*.aab
+# Secrets: NEVER commit
+*.keystore
+*.jks
+keystore.properties
+local.properties
+.env
+secrets/

@@ -1,0 +1,8 @@
+{"avg_stones_on_win":4.41666666666667,"budget":6,"capsize_rate":0.05,"level":1,"ms":16641,"runs":40,"win_rate":0.6}
+{"avg_stones_on_win":4.53846153846154,"budget":6,"capsize_rate":0.05,"level":2,"ms":22270,"runs":40,"win_rate":0.325}
+{"avg_stones_on_win":4.875,"budget":6,"capsize_rate":0.075,"level":3,"ms":21923,"runs":40,"win_rate":0.2}
+{"avg_stones_on_win":5.33333333333333,"budget":7,"capsize_rate":0.075,"level":4,"ms":25729,"runs":40,"win_rate":0.3}
+{"avg_stones_on_win":5.3,"budget":7,"capsize_rate":0.025,"level":5,"ms":28099,"runs":40,"win_rate":0.25}
+{"avg_stones_on_win":4.6,"budget":6,"capsize_rate":0.05,"level":6,"ms":24093,"runs":40,"win_rate":0.125}
+{"avg_stones_on_win":0.0,"budget":8,"capsize_rate":0.1,"level":7,"ms":35594,"runs":40,"win_rate":0.0}
+{"avg_stones_on_win":6.42857142857143,"budget":7,"capsize_rate":0.125,"level":8,"ms":25747,"runs":40,"win_rate":0.175}

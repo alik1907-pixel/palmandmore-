@@ -1,0 +1,8 @@
+{"avg_taps_on_win":16.3125,"avg_target_loss":0.188736263736264,"budget":19,"level":1,"ms":1790,"runs":40,"shards":294,"win_rate":0.4}
+{"avg_taps_on_win":18.3333333333333,"avg_target_loss":0.143333333333333,"budget":19,"level":2,"ms":2255,"runs":40,"shards":294,"win_rate":0.225}
+{"avg_taps_on_win":16.375,"avg_target_loss":0.280508474576271,"budget":18,"level":3,"ms":1539,"runs":40,"shards":294,"win_rate":0.2}
+{"avg_taps_on_win":17.0,"avg_target_loss":0.180859375,"budget":18,"level":4,"ms":1737,"runs":40,"shards":294,"win_rate":0.15}
+{"avg_taps_on_win":16.0,"avg_target_loss":0.176851851851852,"budget":17,"level":5,"ms":1619,"runs":40,"shards":294,"win_rate":0.025}
+{"avg_taps_on_win":16.0,"avg_target_loss":0.218055555555556,"budget":17,"level":6,"ms":1445,"runs":40,"shards":294,"win_rate":0.075}
+{"avg_taps_on_win":15.0,"avg_target_loss":0.139615384615384,"budget":16,"level":7,"ms":1546,"runs":40,"shards":294,"win_rate":0.175}
+{"avg_taps_on_win":15.0,"avg_target_loss":0.187755102040816,"budget":16,"level":8,"ms":1551,"runs":40,"shards":294,"win_rate":0.025}
